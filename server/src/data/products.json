@@ -1,0 +1,10 @@
+{
+    "message": "Products loaded successfully",
+    "products": [
+        {
+            "id": "camera-1",
+            "name": "Outdoor Camera",
+            "price": 149
+        }
+    ]
+}
