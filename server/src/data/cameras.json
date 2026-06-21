@@ -1,0 +1,118 @@
+[
+  {
+    "id": "prod-cam-pro",
+    "title": "Aura Smart Camera Pro",
+    "description": "High-definition 2K outdoor security camera featuring full-color night vision, AI person detection, and local storage support.",
+    "discountBadge": "Save 20%",
+    "variants": [
+      {
+        "id": "cam-pro-black",
+        "name": "Carbon Black",
+        "image": "/images/proCam_black.png",
+        "thumbnail": "/images/proCam_black.png",
+        "price": 149.00,
+        "originalPrice": 189.99
+      },
+      {
+        "id": "cam-pro-white",
+        "name": "Pearl White",
+        "image": "/images/proCam_white.png",
+        "thumbnail": "/images/proCam_white.png",
+        "price": 149.00,
+        "originalPrice": 189.99
+      }
+    ]
+  },
+  {
+    "id": "prod-cam-v4",
+    "title": "Aura Smart Camera V4",
+    "description": "Next-generation 4K ultra-high-definition security camera. Delivers exceptional clarity, intelligent tracking, and high-frequency audio.",
+    "discountBadge": "Hot Deal",
+    "variants": [
+      {
+        "id": "cam-v4-black",
+        "name": "Obsidian Black",
+        "image": "/images/v4Cam_black.png",
+        "thumbnail": "/images/v4Cam_black.png",
+        "price": 199.00,
+        "originalPrice": 249.99
+      },
+      {
+        "id": "cam-v4-gray",
+        "name": "Steel Gray",
+        "image": "/images/v4Cam_gray.png",
+        "thumbnail": "/images/v4Cam_gray.png",
+        "price": 199.00,
+        "originalPrice": 249.99
+      },
+      {
+        "id": "cam-v4-white",
+        "name": "Snow White",
+        "image": "/images/v4Cam_white.png",
+        "thumbnail": "/images/v4Cam_white.png",
+        "price": 199.00,
+        "originalPrice": 249.99
+      }
+    ]
+  },
+  {
+    "id": "prod-cam-v3",
+    "title": "Aura Smart Camera V3",
+    "description": "Reliable 1080p indoor/outdoor security camera with stellar night vision, custom activity zones, and quick magnetic mounting.",
+    "variants": [
+      {
+        "id": "cam-v3-black",
+        "name": "Shadow Black",
+        "image": "/images/v3Cam_black.png",
+        "thumbnail": "/images/v3Cam_black.png",
+        "price": 99.00,
+        "originalPrice": 119.99
+      },
+      {
+        "id": "cam-v3-white",
+        "name": "Arctic White",
+        "image": "/images/v3Cam_white.png",
+        "thumbnail": "/images/v3Cam_white.png",
+        "price": 99.00,
+        "originalPrice": 119.99
+      }
+    ]
+  },
+  {
+    "id": "prod-cam-v2",
+    "title": "Aura Smart Camera V2",
+    "description": "Essential indoor monitoring camera. Perfect for baby monitoring or pet checks, with two-way audio and local SD recording.",
+    "variants": [
+      {
+        "id": "cam-v2-black",
+        "name": "Dark Charcoal",
+        "image": "/images/v2Cam_black.png",
+        "thumbnail": "/images/v2Cam_black.png",
+        "price": 79.00,
+        "originalPrice": 89.99
+      },
+      {
+        "id": "cam-v2-white",
+        "name": "Soft White",
+        "image": "/images/v2Cam_white.png",
+        "thumbnail": "/images/v2Cam_white.png",
+        "price": 79.00,
+        "originalPrice": 89.99
+      }
+    ]
+  },
+  {
+    "id": "prod-cam-duo",
+    "title": "Aura Duo Wide Camera",
+    "description": "Dual-lens wide view outdoor security camera, offering seamless stitched panorama views to remove blindspots entirely.",
+    "variants": [
+      {
+        "id": "cam-duo-white",
+        "name": "Polar White",
+        "image": "/images/duoCam.png",
+        "thumbnail": "/images/duoCam.png",
+        "price": 229.00
+      }
+    ]
+  }
+]

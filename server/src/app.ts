@@ -1,17 +1,16 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
-import productsRouter from "./routes/products.routes";
+import camerasRouter from "./routes/cameras.routes";
 
 const app = express();
+const projectRoot = path.join(__dirname, "../");
 
 app.use(cors());
 app.use(express.json());
 
-// Serve static images from the public/images folder
-app.use("/images", express.static(path.join(__dirname, "../public/images")));
+app.use("/images", express.static(path.join(projectRoot, "public/images")));
 
-app.use("/api/products", productsRouter);
+app.use("/api/cameras", camerasRouter);
 
 export default app;
-

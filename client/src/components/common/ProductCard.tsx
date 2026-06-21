@@ -29,15 +29,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     onSelectionChangeRef.current = onSelectionChange;
   }, [onSelectionChange]);
 
-  // Update selected variant if defaultVariantId changes
-  useEffect(() => {
+  const [prevDefaultVariantId, setPrevDefaultVariantId] = useState(defaultVariantId);
+  if (defaultVariantId !== prevDefaultVariantId) {
+    setPrevDefaultVariantId(defaultVariantId);
     if (defaultVariantId) {
       const match = variants.find((v) => v.id === defaultVariantId);
       if (match) {
         setSelectedVariant(match);
       }
     }
-  }, [defaultVariantId, variants]);
+  }
 
   // Trigger parent update when variant or quantity changes
   useEffect(() => {

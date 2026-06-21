@@ -1,10 +1,10 @@
 import { Router } from "express";
-import products from "../data/products.json";
+import cameras from "../data/cameras.json";
 
 const router = Router();
 
 router.get("/", (_, res) => {
-  res.json(products);
+  res.json(cameras);
 });
 
 export default router;
