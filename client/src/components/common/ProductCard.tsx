@@ -6,7 +6,7 @@ import {
   getDiscountPercentageText,
 } from "../../utils/price";
 
-export const ProductCard: React.FC<ProductCardProps> = ({
+export const ProductCard: React.FC<ProductCardProps & { layout?: "horizontal" | "vertical" }> = ({
   id,
   title,
   description,
@@ -15,6 +15,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   defaultVariantId,
   discountBadge,
   onSelectionChange,
+  layout = "horizontal",
 }) => {
   const initialVariant =
     variants.find((v) => v.id === defaultVariantId) || variants[0];
@@ -75,9 +76,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     );
 
   return (
-    <div className="flex flex-col sm:flex-row gap-5 p-5 bg-white border border-gray-150 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 w-full group">
-      {/* Left side: Image and Badge */}
-      <div className="relative shrink-0 w-full sm:w-44 h-44 sm:h-auto bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center border border-gray-100 group-hover:border-gray-200 transition-colors">
+    <div
+      className={`flex gap-5 p-5 bg-white border border-gray-150 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 w-full group ${
+        layout === "vertical" ? "flex-col" : "flex-col sm:flex-row"
+      }`}
+    >
+      {/* Image and Badge */}
+      <div
+        className={`relative shrink-0 bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center border border-gray-100 group-hover:border-gray-200 transition-colors ${
+          layout === "vertical"
+            ? "w-full h-48"
+            : "w-full sm:w-44 h-44 sm:h-auto"
+        }`}
+      >
         {displayBadge && (
           <div className="absolute top-2.5 left-2.5 z-10 bg-rose-500 text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider shadow-sm animate-pulse">
             {displayBadge}
