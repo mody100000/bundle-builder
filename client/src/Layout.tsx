@@ -3,10 +3,13 @@ import Builder from "./components/Builder";
 export default function Layout() {
   return (
     <div className="py-8 sm:px-6 lg:px-20">
+      <h2 className="text-3xl text-center mb-7 leading-[110%] tracking-[-0.06px] font-bold block md:hidden">
+        Let’s get started!
+      </h2>
       <div className="mx-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-8 items-start">
           {/* Builder Area (Left) */}
-          <div className="lg:col-span-6 xl:col-span-7 space-y-6">
+          <div className="lg:col-span-6 xl:col-span-7 space-y-2">
             <Builder />
           </div>
 
@@ -37,7 +40,7 @@ export default function Layout() {
                     d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
                   />
                 </svg>
-                <p className="text-xs font-medium max-w-[160px] mx-auto leading-relaxed">
+                <p className="text-xs font-medium max-w-40 mx-auto leading-relaxed">
                   Your customized hardware and monitoring plans will summarize
                   here as you build.
                 </p>

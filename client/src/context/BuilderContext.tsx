@@ -6,6 +6,8 @@ export interface BuilderContextType {
   activeStep: StepId | null;
   toggleStep: (step: StepId) => void;
   goToNextStep: (currentStep: StepId) => void;
+  selections: Record<StepId, number>;
+  setSelectionCount: (stepId: StepId, count: number) => void;
 }
 
 const BuilderContext = createContext<BuilderContextType | undefined>(undefined);
@@ -16,6 +18,12 @@ interface BuilderProviderProps {
 
 export function BuilderProvider({ children }: BuilderProviderProps) {
   const [activeStep, setActiveStep] = useState<StepId | null>(INITIAL_STEP);
+  const [selections, setSelections] = useState<Record<StepId, number>>({
+    1: 2, // Step 1: 2 selected (Choose your cameras)
+    2: 1, // Step 2: 1 selected (Choose your plan)
+    3: 0, // Step 3: 2 selected (Choose your sensors)
+    4: 1, // Step 4: 1 selected (Add extra protection)
+  });
 
   const toggleStep = (id: StepId) => {
     setActiveStep((prev) => (prev === id ? null : id));
@@ -27,8 +35,23 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
     }
   };
 
+  const setSelectionCount = (stepId: StepId, count: number) => {
+    setSelections((prev) => ({
+      ...prev,
+      [stepId]: count,
+    }));
+  };
+
   return (
-    <BuilderContext.Provider value={{ activeStep, toggleStep, goToNextStep }}>
+    <BuilderContext.Provider
+      value={{
+        activeStep,
+        toggleStep,
+        goToNextStep,
+        selections,
+        setSelectionCount,
+      }}
+    >
       {children}
     </BuilderContext.Provider>
   );

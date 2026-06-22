@@ -9,24 +9,22 @@ import Plan from "./plan";
 
 const STEP_COMPONENTS: Record<StepId, React.ComponentType> = {
   1: Cameras,
-  2: Sensors,
-  3: Protection,
-  4: Plan,
+  2: Plan,
+  3: Sensors,
+  4: Protection,
 };
 
 export function Builder() {
   return (
     <BuilderProvider>
-      <div className="space-y-4">
-        {STEPS_METADATA.map(({ id, title }) => {
-          const Component = STEP_COMPONENTS[id];
-          return (
-            <AccordionStep key={id} id={id} title={title}>
-              <Component />
-            </AccordionStep>
-          );
-        })}
-      </div>
+      {STEPS_METADATA.map(({ id, title }) => {
+        const Component = STEP_COMPONENTS[id];
+        return (
+          <AccordionStep key={id} id={id} title={title}>
+            <Component />
+          </AccordionStep>
+        );
+      })}
     </BuilderProvider>
   );
 }

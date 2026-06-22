@@ -11,10 +11,10 @@ export function Sensors() {
         opening sensors.
       </div>
       <div className="p-12 bg-slate-50 border border-slate-100 rounded-2xl text-center text-xs text-gray-400 font-medium select-none">
-        Sensors Configuration Area (Step 2 Placeholder)
+        Sensors Configuration Area (Step 3 Placeholder)
       </div>
       <div className="flex justify-end pt-2">
-        <Button onClick={() => goToNextStep(2)}>Next Step</Button>
+        <Button onClick={() => goToNextStep(3)}>Next Step</Button>
       </div>
     </div>
   );

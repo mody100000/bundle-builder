@@ -9,8 +9,8 @@ export interface StepMetadata {
 }
 
 export const STEPS_METADATA: StepMetadata[] = [
-  { id: 1, title: "Cameras" },
-  { id: 2, title: "Sensors" },
-  { id: 3, title: "Protection" },
-  { id: 4, title: "Plan" },
+  { id: 1, title: "Choose your cameras" },
+  { id: 2, title: "Choose your sensors" },
+  { id: 3, title: "Choose your protection" },
+  { id: 4, title: "Choose your plan" },
 ];

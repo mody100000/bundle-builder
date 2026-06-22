@@ -8,59 +8,101 @@ export interface AccordionStepProps {
   children: React.ReactNode;
 }
 
+import { StepIcon } from "./stepIcons";
+
+const ChevronIcon = ({ isOpen }: { isOpen: boolean }) => (
+  <svg
+    width="10"
+    height="7"
+    viewBox="0 0 10 7"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={`transition-transform duration-300 ${
+      isOpen ? "rotate-180" : ""
+    }`}
+  >
+    <path
+      d="M4.93612 6.43039C4.73671 6.70956 4.32179 6.70956 4.12238 6.43038L0.094018 0.790617C-0.142362 0.459682 0.0942011 0 0.500886 0L8.5577 0C8.96438 0 9.20095 0.459687 8.96456 0.790621L4.93612 6.43039Z"
+      fill="#4E2FD2"
+    />
+  </svg>
+);
+
 export function AccordionStep({ id, title, children }: AccordionStepProps) {
-  const { activeStep, toggleStep } = useBuilder();
+  const { activeStep, toggleStep, selections } = useBuilder();
   const isOpen = activeStep === id;
+  const selectionCount = selections[id] || 0;
 
   return (
     <div
-      className={`border rounded-2xl overflow-hidden transition-all duration-300 ${
+      className={`overflow-hidden transition-all duration-300 ${
         isOpen
-          ? "border-blue-200 bg-white shadow-md shadow-blue-50/50"
-          : "border-gray-200 bg-gray-50/30 hover:bg-gray-50/60"
+          ? "border-blue-200 rounded-2xl bg-(--bg-primary) shadow-md shadow-blue-50/50"
+          : ""
       }`}
     >
-      {/* Header */}
-      <button
-        onClick={() => toggleStep(id)}
-        className="w-full flex items-center justify-between p-5 text-left font-semibold text-gray-800 transition-colors focus:outline-none cursor-pointer"
-      >
-        <span className="flex items-center gap-3.5">
-          <span
-            className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
-              isOpen ? "bg-blue-600 text-white" : "bg-slate-200 text-slate-500"
-            }`}
-          >
-            {id}
+      {isOpen ? (
+        /* Open State Header */
+        <div className="p-5 pb-0">
+          <div className="flex items-center justify-between pb-3 border-b border-gray-200">
+            <div className="flex flex-col gap-1.5">
+              <span className="text-xs text-blue-600 font-bold uppercase tracking-wider underline decoration-blue-600 decoration-2 underline-offset-4 w-fit">
+                Step {id} of 4
+              </span>
+              <h2 className="text-xl leading-[100%] tracking-normal font-bold text-gray-900 flex items-center gap-2 mt-1">
+                {StepIcon({ id, className: "w-8 h-8" })} {title}
+              </h2>
+            </div>
+
+            <button
+              onClick={() => toggleStep(id)}
+              className=" cursor-pointer focus:outline-none hover:scale-105 p-1"
+            >
+              <div className="flex items-center gap-2">
+                {selectionCount > 0 && (
+                  <span className="text-sm text-[#4E2FD2] leading-4 tracking-normal font-normal">
+                    {selectionCount} selected
+                  </span>
+                )}
+                <ChevronIcon isOpen={isOpen} />
+              </div>
+            </button>
+          </div>
+        </div>
+      ) : (
+        /* Closed State Header */
+        <>
+          <span className=" font-normal text-[10px] leading-[100%] tracking-[1.6px] uppercase align-middle px-3 text-[#484848] whitespace-nowrap">
+            Step {id} of 4
           </span>
-          <span
-            className={`text-sm font-bold tracking-tight ${isOpen ? "text-gray-900" : "text-gray-600"}`}
-          >
-            {title}
-          </span>
-        </span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${
-            isOpen ? "rotate-180 text-blue-600" : ""
-          }`}
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </button>
+          <div className="relative">
+            <button
+              onClick={() => toggleStep(id)}
+              className="w-full border-y-[0.5px] border-[#1F1F1F] flex items-center justify-between py-4 px-4 text-left font-semibold transition-colors focus:outline-none cursor-pointer"
+            >
+              {/* Step info */}
+              <h1 className="text-[22px] font-bold tracking-tight flex items-center gap-2">
+                {StepIcon({ id })} {title}
+              </h1>
+
+              {/* Selections info and Chevron */}
+              <div className="flex items-center gap-2">
+                {selectionCount > 0 && (
+                  <span className="text-sm text-[#4E2FD2] leading-4 tracking-normal font-normal">
+                    {selectionCount} selected
+                  </span>
+                )}
+                <ChevronIcon isOpen={isOpen} />
+              </div>
+            </button>
+          </div>
+        </>
+      )}
 
       {/* Body container with smooth transitions */}
       <div
         className={`transition-all duration-300 ease-in-out overflow-hidden ${
-          isOpen
-            ? "max-h-200 opacity-100 border-t border-gray-150"
-            : "max-h-0 opacity-0"
+          isOpen ? "max-h-200 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div className="p-6">{children}</div>
