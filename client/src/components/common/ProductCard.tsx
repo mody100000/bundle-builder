@@ -6,7 +6,9 @@ import {
   getDiscountPercentageText,
 } from "../../utils/price";
 
-export const ProductCard: React.FC<ProductCardProps & { layout?: "horizontal" | "vertical" }> = ({
+export const ProductCard: React.FC<
+  ProductCardProps & { layout?: "horizontal" | "vertical" }
+> = ({
   id,
   title,
   description,
@@ -30,7 +32,8 @@ export const ProductCard: React.FC<ProductCardProps & { layout?: "horizontal" | 
     onSelectionChangeRef.current = onSelectionChange;
   }, [onSelectionChange]);
 
-  const [prevDefaultVariantId, setPrevDefaultVariantId] = useState(defaultVariantId);
+  const [prevDefaultVariantId, setPrevDefaultVariantId] =
+    useState(defaultVariantId);
   if (defaultVariantId !== prevDefaultVariantId) {
     setPrevDefaultVariantId(defaultVariantId);
     if (defaultVariantId) {
@@ -77,8 +80,8 @@ export const ProductCard: React.FC<ProductCardProps & { layout?: "horizontal" | 
 
   return (
     <div
-      className={`flex gap-5 p-5 bg-white border border-gray-150 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 w-full group ${
-        layout === "vertical" ? "flex-col" : "flex-col sm:flex-row"
+      className={`flex gap-5 p-2 bg-white border border-gray-150 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 w-full group ${
+        layout === "vertical" ? "flex-col" : "flex-col sm:flex-row p-5"
       }`}
     >
       {/* Image and Badge */}

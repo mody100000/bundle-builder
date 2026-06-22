@@ -43,7 +43,7 @@ export function AccordionStep({ id, title, children }: AccordionStepProps) {
     >
       {isOpen ? (
         /* Open State Header */
-        <div className="py-5">
+        <div className="pt-5">
           <div className="text-xs leading-[100%] tracking-[1.6px] uppercase border-b border-current pb-1 w-full">
             <span className="p-4">Step {id} of 4</span>
           </div>
@@ -105,7 +105,7 @@ export function AccordionStep({ id, title, children }: AccordionStepProps) {
           isOpen ? "opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="p-6">{children}</div>
+        <div className="px-6 pb-3 pt-2">{children}</div>
       </div>
     </div>
   );

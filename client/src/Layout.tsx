@@ -7,14 +7,14 @@ export default function Layout() {
         Let’s get started!
       </h2>
       <div className="mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-10 gap-8 items-start">
+        <div className="grid grid-cols-1 2xl:grid-cols-10 gap-8 items-start">
           {/* Builder Area (Left) */}
-          <div className="lg:col-span-6 xl:col-span-7 space-y-2">
+          <div className="2xl:col-span-7 space-y-2">
             <Builder />
           </div>
 
           {/* Review Panel Area (Right) */}
-          <div className="lg:col-span-4 xl:col-span-3 sticky top-6">
+          <div className="2xl:col-span-3 2xl:sticky 2xl:top-6">
             <div className="bg-white border border-gray-150 rounded-2xl shadow-sm p-6 overflow-hidden">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-lg font-bold text-gray-900">
