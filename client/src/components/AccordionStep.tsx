@@ -43,13 +43,13 @@ export function AccordionStep({ id, title, children }: AccordionStepProps) {
     >
       {isOpen ? (
         /* Open State Header */
-        <div className="p-5 pb-0">
-          <div className="flex items-center justify-between pb-3 border-b border-gray-200">
+        <div className="py-5">
+          <div className="text-xs leading-[100%] tracking-[1.6px] uppercase border-b border-current pb-1 w-full">
+            <span className="p-4">Step {id} of 4</span>
+          </div>
+          <div className="flex items-center justify-between p-5 pb-3">
             <div className="flex flex-col gap-1.5">
-              <span className="text-xs text-blue-600 font-bold uppercase tracking-wider underline decoration-blue-600 decoration-2 underline-offset-4 w-fit">
-                Step {id} of 4
-              </span>
-              <h2 className="text-xl leading-[100%] tracking-normal font-bold text-gray-900 flex items-center gap-2 mt-1">
+              <h2 className="text-xl leading-[100%] tracking-normal flex items-center gap-2 mt-1">
                 {StepIcon({ id, className: "w-8 h-8" })} {title}
               </h2>
             </div>
@@ -72,7 +72,7 @@ export function AccordionStep({ id, title, children }: AccordionStepProps) {
       ) : (
         /* Closed State Header */
         <>
-          <span className=" font-normal text-[10px] leading-[100%] tracking-[1.6px] uppercase align-middle px-3 text-[#484848] whitespace-nowrap">
+          <span className="font-normal text-[10px] leading-[100%] tracking-[1.6px] uppercase align-middle px-3 text-[#484848] whitespace-nowrap">
             Step {id} of 4
           </span>
           <div className="relative">
