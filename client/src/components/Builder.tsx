@@ -1,5 +1,4 @@
 import React from "react";
-import { BuilderProvider } from "../context/BuilderContext";
 import { STEPS_METADATA, type StepId } from "../context/constants";
 import AccordionStep from "./AccordionStep";
 import Cameras from "./cameras";
@@ -16,7 +15,7 @@ const STEP_COMPONENTS: Record<StepId, React.ComponentType> = {
 
 export function Builder() {
   return (
-    <BuilderProvider>
+    <>
       {STEPS_METADATA.map(({ id, title }) => {
         const Component = STEP_COMPONENTS[id];
         return (
@@ -25,7 +24,7 @@ export function Builder() {
           </AccordionStep>
         );
       })}
-    </BuilderProvider>
+    </>
   );
 }
 

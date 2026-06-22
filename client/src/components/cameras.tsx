@@ -3,6 +3,7 @@ import { useBuilder } from "../context/BuilderContext";
 
 import { useCameras } from "../hooks/useCameras";
 import ProductCard from "./common/ProductCard";
+import BuilderLayout from "../layouts/BuilderLayout";
 
 export function Cameras() {
   const { goToNextStep } = useBuilder();
@@ -22,37 +23,12 @@ export function Cameras() {
       )}
 
       {cameras && (
-        <>
-          {/* ── Small screens: single column, horizontal card layout ── */}
-          <div className="flex flex-col gap-4 md:hidden">
-            {cameras.map((camera) => (
-              <ProductCard key={camera.id} {...camera} layout="horizontal" />
-            ))}
-          </div>
-          {/* ── Medium / tablet screens: vertical cards, responsive columns ── */}
-          <div className="hidden md:grid 2xl:hidden grid-cols-2 lg:grid-cols-3 gap-4 pb-2">
-            {cameras.map((camera) => (
-              <div key={camera.id} className="w-full">
-                <ProductCard {...camera} layout="vertical" />
-              </div>
-            ))}
-          </div>
-          {/* ── Large screens: 2-column grid, last odd item centered ── */}
-          <div className="hidden 2xl:grid 2xl:grid-cols-2 gap-6">
-            {cameras.map((camera, idx) => (
-              <div
-                key={camera.id}
-                className={
-                  cameras.length % 2 !== 0 && idx === cameras.length - 1
-                    ? "2xl:col-span-2 2xl:w-1/2 2xl:mx-auto"
-                    : ""
-                }
-              >
-                <ProductCard {...camera} layout="horizontal" />
-              </div>
-            ))}
-          </div>
-        </>
+        <BuilderLayout
+          items={cameras}
+          renderItem={(camera, layout) => (
+            <ProductCard {...camera} layout={layout} stepId={1} />
+          )}
+        />
       )}
 
       <div className="flex justify-end pt-2">

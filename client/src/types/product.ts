@@ -1,3 +1,5 @@
+import { type StepId } from "../context/constants";
+
 export interface ColorVariant {
   id: string;
   name: string;
@@ -5,6 +7,9 @@ export interface ColorVariant {
   thumbnail: string; // Color selector thumbnail URL
   price: number; // Current price
   originalPrice?: number; // Pre-discount price
+  discount?: number;
+  quantity?: number;
+  maxQuantity?: number;
 }
 
 export interface ProductCardProps {
@@ -15,6 +20,7 @@ export interface ProductCardProps {
   variants: ColorVariant[];
   defaultVariantId?: string;
   discountBadge?: string;
+  stepId?: StepId;
   onSelectionChange?: (selection: Selection) => void;
 }
 
@@ -36,4 +42,5 @@ export interface Selection {
   name: string;
   colorName: string;
   image: string;
+  stepId: StepId;
 }

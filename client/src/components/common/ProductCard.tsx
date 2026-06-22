@@ -5,6 +5,7 @@ import {
   calculateTotal,
   getDiscountPercentageText,
 } from "../../utils/price";
+import { useBuilder } from "../../context/BuilderContext";
 
 export const ProductCard: React.FC<
   ProductCardProps & { layout?: "horizontal" | "vertical" }
@@ -16,6 +17,7 @@ export const ProductCard: React.FC<
   variants,
   defaultVariantId,
   discountBadge,
+  stepId = 1,
   onSelectionChange,
   layout = "horizontal",
 }) => {
@@ -24,7 +26,9 @@ export const ProductCard: React.FC<
 
   const [selectedVariant, setSelectedVariant] =
     useState<ColorVariant>(initialVariant);
-  const [currentQuantity, setCurrentQuantity] = useState<number>(1);
+
+  const { selectedVariants, updateVariantQuantity } = useBuilder();
+  const currentQuantity = selectedVariants[selectedVariant.id]?.quantity ?? 0;
 
   // Keep a mutable ref of the parent callback to avoid re-triggering the effect
   const onSelectionChangeRef = useRef(onSelectionChange);
@@ -56,44 +60,67 @@ export const ProductCard: React.FC<
         name: title,
         colorName: selectedVariant.name,
         image: selectedVariant.image,
+        stepId,
       });
     }
-  }, [selectedVariant, currentQuantity, id, title]);
+  }, [selectedVariant, currentQuantity, id, title, stepId]);
 
   const handleDecrement = () => {
-    if (currentQuantity > 1) {
-      setCurrentQuantity((prev) => prev - 1);
+    if (currentQuantity > 0) {
+      updateVariantQuantity(
+        stepId,
+        id,
+        selectedVariant.id,
+        currentQuantity - 1,
+        selectedVariant.price,
+        selectedVariant.originalPrice,
+        title,
+        selectedVariant.name,
+        selectedVariant.image,
+      );
     }
   };
 
   const handleIncrement = () => {
-    setCurrentQuantity((prev) => prev + 1);
+    const maxQty = selectedVariant.maxQuantity ?? Infinity;
+    if (currentQuantity < maxQty) {
+      updateVariantQuantity(
+        stepId,
+        id,
+        selectedVariant.id,
+        currentQuantity + 1,
+        selectedVariant.price,
+        selectedVariant.originalPrice,
+        title,
+        selectedVariant.name,
+        selectedVariant.image,
+      );
+    }
   };
 
-  // Determine discount badge: prioritize prop, fallback to variant-specific calculation
-  const displayBadge =
-    discountBadge ||
-    getDiscountPercentageText(
-      selectedVariant.price,
-      selectedVariant.originalPrice,
-    );
+  // Determine discount badge: prioritize variant-specific discount percentage, fallback to prop
+  const displayBadge = selectedVariant.discount
+    ? `Save ${selectedVariant.discount}%`
+    : discountBadge ||
+      getDiscountPercentageText(
+        selectedVariant.price,
+        selectedVariant.originalPrice,
+      );
 
   return (
     <div
-      className={`flex gap-5 p-2 bg-white border border-gray-150 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 w-full group ${
-        layout === "vertical" ? "flex-col" : "flex-col sm:flex-row p-5"
+      className={`flex gap-3 p-2 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 w-full group ${
+        layout === "vertical" ? "flex-col" : "flex-col sm:flex-row"
       }`}
     >
       {/* Image and Badge */}
       <div
-        className={`relative shrink-0 bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center border border-gray-100 group-hover:border-gray-200 transition-colors ${
-          layout === "vertical"
-            ? "w-full h-48"
-            : "w-full sm:w-44 h-44 sm:h-auto"
+        className={`relative shrink-0 rounded-xl overflow-hidden flex items-center justify-center  group-hover:border-gray-200 transition-colors ${
+          layout === "vertical" ? "w-full h-34" : "w-full sm:w-34 h-40"
         }`}
       >
         {displayBadge && (
-          <div className="absolute top-2.5 left-2.5 z-10 bg-rose-500 text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider shadow-sm animate-pulse">
+          <div className="absolute top-2.5 left-2.5 z-10 bg-[#4E2FD2] text-white text-[12px] leading-none tracking-normal px-2 py-1 rounded-xl shadow-sm animate-pulse">
             {displayBadge}
           </div>
         )}
@@ -105,29 +132,26 @@ export const ProductCard: React.FC<
       </div>
 
       {/* Right side: Content */}
-      <div className="flex flex-col justify-between grow">
+      <div className="flex flex-col justify-between grow pr-6">
         <div>
           {/* Title */}
-          <h3 className="text-base font-semibold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
+          <h3 className="text-base leading-none tracking-[0.6px] mb-2 group-hover:text-[#4E2FD2] transition-colors">
             {title}
           </h3>
 
           {/* Description & Learn More */}
-          <p className="text-xs text-gray-500 leading-relaxed mb-4">
+          <p className="text-xs leading-[1.3] tracking-[0.6px] mb-3">
             {description}
             <a
               href={learnMoreUrl}
-              className="text-blue-600 hover:text-blue-700 underline font-medium inline-block ml-1 transition-colors focus:ring-2 focus:ring-blue-500 focus:outline-none rounded"
+              className="text-[#4E2FD2] hover:text-[#3a20a0] underline font-medium inline-block ml-1 transition-colors focus:ring-2 focus:ring-[#4E2FD2] focus:outline-none rounded"
             >
               Learn more
             </a>
           </p>
 
           {/* Color Selector */}
-          <div className="mb-4">
-            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-2">
-              Select Color
-            </span>
+          <div className="">
             <div className="flex flex-wrap gap-2">
               {variants.map((variant) => {
                 const isSelected = selectedVariant.id === variant.id;
@@ -135,13 +159,13 @@ export const ProductCard: React.FC<
                   <button
                     key={variant.id}
                     onClick={() => setSelectedVariant(variant)}
-                    className={`flex flex-col items-center p-1.5 rounded-lg border text-center transition-all duration-200 cursor-pointer min-w-16 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`flex items-center justify-center rounded-xs border text-center transition-all duration-200 cursor-pointer min-w-16 ${
                       isSelected
-                        ? "border-blue-600 bg-blue-50/30 shadow-sm"
-                        : "border-gray-200 bg-white hover:border-gray-300"
+                        ? "border-[0.5px] border-[#0AA288] bg-[#1DF0BB0A] shadow-sm"
+                        : "border-[0.5px] border-[#CCCCCC] bg-white "
                     }`}
                   >
-                    <div className="w-10 h-10 rounded-md overflow-hidden bg-gray-50 border border-gray-100 flex items-center justify-center mb-1">
+                    <div className="w-6 h-6 rounded-md overflow-hidden flex items-center justify-center">
                       <img
                         src={variant.thumbnail}
                         alt={variant.name}
@@ -149,9 +173,9 @@ export const ProductCard: React.FC<
                       />
                     </div>
                     <span
-                      className={`text-[9px] font-semibold truncate max-w-14 leading-tight ${
-                        isSelected ? "text-blue-600 font-bold" : "text-gray-500"
-                      }`}
+                      className={
+                        "text-[10px] text-[#1F1F1F] leading-none tracking-[0.6px] truncate max-w-14"
+                      }
                     >
                       {variant.name}
                     </span>
@@ -163,22 +187,25 @@ export const ProductCard: React.FC<
         </div>
 
         {/* Quantity & Price Row */}
-        <div className="flex items-center justify-between border-t border-gray-100 pt-3.5 mt-auto">
+        <div className="flex items-center justify-between my-3">
           {/* Quantity Selector */}
-          <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg p-0.5 shadow-inner">
+          <div className="flex items-center">
             <button
               onClick={handleDecrement}
-              disabled={currentQuantity <= 1}
-              className="w-7 h-7 flex items-center justify-center rounded-md bg-white hover:bg-gray-100 text-gray-600 border border-gray-200 shadow-sm transition-all active:scale-95 cursor-pointer font-bold disabled:opacity-40 disabled:hover:bg-white disabled:cursor-not-allowed text-xs"
+              disabled={currentQuantity <= 0}
+              className="w-7 h-7 flex items-center text-lg justify-center rounded-md bg-[#F0F4F7] hover:bg-gray-100 text-gray-600 border border-gray-200 shadow-sm transition-all active:scale-95 cursor-pointer font-bold disabled:bg-white disabled:cursor-not-allowed disabled:border-2 disabled:border-[#E6EBF0] disabled:text-gray-400 "
             >
               -
             </button>
-            <span className="w-8 text-center text-xs font-bold text-gray-700 select-none">
+            <span className="w-11 text-center text-base text-[#0B0D10] select-none">
               {currentQuantity}
             </span>
             <button
               onClick={handleIncrement}
-              className="w-7 h-7 flex items-center justify-center rounded-md bg-white hover:bg-gray-100 text-gray-600 border border-gray-200 shadow-sm transition-all active:scale-95 cursor-pointer font-bold text-xs"
+              disabled={
+                currentQuantity >= (selectedVariant.maxQuantity ?? Infinity)
+              }
+              className="w-7 h-7 flex items-center justify-center rounded-md bg-[#F0F4F7] hover:bg-gray-100 text-gray-600 border border-gray-200 shadow-sm transition-all active:scale-95 cursor-pointer font-bold disabled:bg-white disabled:cursor-not-allowed disabled:border-2 disabled:border-[#E6EBF0] disabled:text-gray-400 text-lg"
             >
               +
             </button>
@@ -188,24 +215,30 @@ export const ProductCard: React.FC<
           <div className="text-right flex flex-col justify-center min-h-9.5">
             {selectedVariant.originalPrice ? (
               <>
-                <span className="text-[11px] font-bold text-rose-500 line-through leading-none block mb-0.5">
+                <span className="text-base font-normal leading-none tracking-[0.6px] text-[#D8392B] line-through block mb-0.5">
                   {formatPrice(
                     calculateTotal(
                       selectedVariant.originalPrice,
-                      currentQuantity,
+                      currentQuantity > 0 ? currentQuantity : 1,
                     ),
                   )}
                 </span>
-                <span className="text-base font-extrabold text-gray-900 leading-none">
+                <span className="text-base font-normal tracking-[0.6px] text-[#575757] leading-none">
                   {formatPrice(
-                    calculateTotal(selectedVariant.price, currentQuantity),
+                    calculateTotal(
+                      selectedVariant.price,
+                      currentQuantity > 0 ? currentQuantity : 1,
+                    ),
                   )}
                 </span>
               </>
             ) : (
-              <span className="text-base font-extrabold text-gray-900 leading-none">
+              <span className="text-base font-normal text-[#575757] leading-none">
                 {formatPrice(
-                  calculateTotal(selectedVariant.price, currentQuantity),
+                  calculateTotal(
+                    selectedVariant.price,
+                    currentQuantity > 0 ? currentQuantity : 1,
+                  ),
                 )}
               </span>
             )}

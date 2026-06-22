@@ -1,117 +1,136 @@
 [
   {
-    "id": "prod-cam-pro",
-    "title": "Aura Smart Camera Pro",
-    "description": "High-definition 2K outdoor security camera featuring full-color night vision, AI person detection, and local storage support.",
-    "discountBadge": "Save 20%",
-    "variants": [
-      {
-        "id": "cam-pro-black",
-        "name": "Carbon Black",
-        "image": "/images/proCam_black.png",
-        "thumbnail": "/images/proCam_black.png",
-        "price": 149.00,
-        "originalPrice": 189.99
-      },
-      {
-        "id": "cam-pro-white",
-        "name": "Pearl White",
-        "image": "/images/proCam_white.png",
-        "thumbnail": "/images/proCam_white.png",
-        "price": 149.00,
-        "originalPrice": 189.99
-      }
-    ]
-  },
-  {
     "id": "prod-cam-v4",
-    "title": "Aura Smart Camera V4",
-    "description": "Next-generation 4K ultra-high-definition security camera. Delivers exceptional clarity, intelligent tracking, and high-frequency audio.",
-    "discountBadge": "Hot Deal",
+    "title": "Wyze Cam v4",
+    "description": "The clearest Wyze Cam ever made.",
     "variants": [
       {
-        "id": "cam-v4-black",
-        "name": "Obsidian Black",
-        "image": "/images/v4Cam_black.png",
-        "thumbnail": "/images/v4Cam_black.png",
-        "price": 199.00,
-        "originalPrice": 249.99
+        "id": "cam-v4-white",
+        "name": "White",
+        "image": "/images/v4Cam_white.png",
+        "thumbnail": "/images/v4Cam_white.png",
+        "price": 35.98,
+        "discount": 22,
+        "quantity": 0,
+        "maxQuantity": 5
       },
       {
         "id": "cam-v4-gray",
-        "name": "Steel Gray",
+        "name": "Gray",
         "image": "/images/v4Cam_gray.png",
         "thumbnail": "/images/v4Cam_gray.png",
-        "price": 199.00,
-        "originalPrice": 249.99
+        "price": 35.98,
+        "discount": 22,
+        "quantity": 0,
+        "maxQuantity": 5
       },
       {
-        "id": "cam-v4-white",
-        "name": "Snow White",
-        "image": "/images/v4Cam_white.png",
-        "thumbnail": "/images/v4Cam_white.png",
-        "price": 199.00,
-        "originalPrice": 249.99
+        "id": "cam-v4-black",
+        "name": "Black",
+        "image": "/images/v4Cam_black.png",
+        "thumbnail": "/images/v4Cam_black.png",
+        "price": 35.98,
+        "discount": 22,
+        "quantity": 0,
+        "maxQuantity": 5
       }
     ]
   },
   {
     "id": "prod-cam-v3",
-    "title": "Aura Smart Camera V3",
-    "description": "Reliable 1080p indoor/outdoor security camera with stellar night vision, custom activity zones, and quick magnetic mounting.",
+    "title": "Wyze Cam Pan v3",
+    "description": "360° pan and 180° tilt security camera.",
     "variants": [
       {
-        "id": "cam-v3-black",
-        "name": "Shadow Black",
-        "image": "/images/v3Cam_black.png",
-        "thumbnail": "/images/v3Cam_black.png",
-        "price": 99.00,
-        "originalPrice": 119.99
-      },
-      {
         "id": "cam-v3-white",
-        "name": "Arctic White",
+        "name": "White",
         "image": "/images/v3Cam_white.png",
         "thumbnail": "/images/v3Cam_white.png",
-        "price": 99.00,
-        "originalPrice": 119.99
+        "price": 39.98,
+        "discount": 12,
+        "quantity": 0,
+        "maxQuantity": 4
+      },
+      {
+        "id": "cam-v3-black",
+        "name": "Black",
+        "image": "/images/v3Cam_black.png",
+        "thumbnail": "/images/v3Cam_black.png",
+        "price": 39.98,
+        "discount": 12,
+        "quantity": 0,
+        "maxQuantity": 4
       }
     ]
   },
   {
     "id": "prod-cam-v2",
-    "title": "Aura Smart Camera V2",
-    "description": "Essential indoor monitoring camera. Perfect for baby monitoring or pet checks, with two-way audio and local SD recording.",
+    "title": "Wyze Cam Floodlight v2",
+    "description": "2K floodlight camera with a 160° wide-angle view for your garage.",
     "variants": [
       {
-        "id": "cam-v2-black",
-        "name": "Dark Charcoal",
-        "image": "/images/v2Cam_black.png",
-        "thumbnail": "/images/v2Cam_black.png",
-        "price": 79.00,
-        "originalPrice": 89.99
-      },
-      {
         "id": "cam-v2-white",
-        "name": "Soft White",
+        "name": "White",
         "image": "/images/v2Cam_white.png",
         "thumbnail": "/images/v2Cam_white.png",
-        "price": 79.00,
-        "originalPrice": 89.99
+        "price": 89.98,
+        "discount": 22,
+        "quantity": 0,
+        "maxQuantity": 5
+      },
+      {
+        "id": "cam-v2-black",
+        "name": "Black",
+        "image": "/images/v2Cam_black.png",
+        "thumbnail": "/images/v2Cam_black.png",
+        "price": 89.98,
+        "discount": 22,
+        "quantity": 0,
+        "maxQuantity": 5
       }
     ]
   },
   {
     "id": "prod-cam-duo",
-    "title": "Aura Duo Wide Camera",
-    "description": "Dual-lens wide view outdoor security camera, offering seamless stitched panorama views to remove blindspots entirely.",
+    "title": "Wyze Duo Cam Doorbell",
+    "description": "Two cameras. Two views. Double the porch protection.",
     "variants": [
       {
         "id": "cam-duo-white",
-        "name": "Polar White",
+        "name": "White",
         "image": "/images/duoCam.png",
         "thumbnail": "/images/duoCam.png",
-        "price": 229.00
+        "price": 69.98,
+        "discount": 0,
+        "quantity": 0,
+        "maxQuantity": 2
+      }
+    ]
+  },
+  {
+    "id": "prod-cam-pro",
+    "title": "Wyze Battery Cam Pro ",
+    "description": "Protect anywhere. See everything in 2.5K HDR. No power outlet or electrician needed.",
+    "variants": [
+      {
+        "id": "cam-pro-white",
+        "name": "White",
+        "image": "/images/proCam_white.png",
+        "thumbnail": "/images/proCam_white.png",
+        "price": 69.98,
+        "discount": 0,
+        "quantity": 0,
+        "maxQuantity": 3
+      },
+      {
+        "id": "cam-pro-black",
+        "name": "Black",
+        "image": "/images/proCam_black.png",
+        "thumbnail": "/images/proCam_black.png",
+        "price": 89.98,
+        "discount": 0,
+        "quantity": 0,
+        "maxQuantity": 3
       }
     ]
   }

@@ -1,3 +1,5 @@
+import { type Selection } from "../types/product";
+
 /**
  * Formats a numeric price into a currency string (e.g. $149.00)
  */
@@ -36,4 +38,23 @@ export const getDiscountPercentageText = (
   }
   const percentage = Math.round(((originalPrice - price) / originalPrice) * 100);
   return `${percentage}% OFF`;
+};
+
+/**
+ * Calculates dynamic totals (subtotal and totalSavings) for selected products
+ */
+export const calculateBundleTotals = (selectedList: Selection[]) => {
+  const subtotal = selectedList.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+
+  const totalSavings = selectedList.reduce((sum, item) => {
+    if (item.originalPrice && item.originalPrice > item.price) {
+      return sum + (item.originalPrice - item.price) * item.quantity;
+    }
+    return sum;
+  }, 0);
+
+  return { subtotal, totalSavings };
 };
