@@ -33,7 +33,7 @@ export function BuilderLayout<T>({
         ))}
       </div>
       {/* ── Medium / tablet screens: vertical cards, responsive columns ── */}
-      <div className="hidden md:grid 2xl:hidden grid-cols-2 lg:grid-cols-3 gap-4 pb-2">
+      <div className="hidden md:grid xl:hidden grid-cols-2 lg:grid-cols-3 gap-4 pb-2">
         {items.map((item, idx) => (
           <div key={getSafeKey(item, idx)} className="w-full h-full">
             {renderItem(item, "vertical")}
@@ -41,13 +41,13 @@ export function BuilderLayout<T>({
         ))}
       </div>
       {/* ── Large screens: 2-column grid, last odd item centered ── */}
-      <div className="hidden 2xl:grid 2xl:grid-cols-2 gap-6">
+      <div className="hidden xl:grid xl:grid-cols-2 gap-6">
         {items.map((item, idx) => (
           <div
             key={getSafeKey(item, idx)}
             className={
               items.length % 2 !== 0 && idx === items.length - 1
-                ? "2xl:col-span-2 2xl:w-1/2 2xl:mx-auto h-full"
+                ? "xl:col-span-2 xl:w-1/2 xl:mx-auto h-full"
                 : "h-full"
             }
           >

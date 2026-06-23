@@ -8,14 +8,14 @@ export default function Layout() {
         Let’s get started!
       </h2>
       <div className="mx-auto w-full">
-        <div className="grid grid-cols-1 2xl:grid-cols-10 gap-8 items-start">
+        <div className="grid grid-cols-1 xl:grid-cols-10 gap-8 items-start">
           {/* Builder Area (Left) */}
-          <div className="2xl:col-span-7 space-y-2">
+          <div className="xl:col-span-7 space-y-2">
             <Builder />
           </div>
 
           {/* Review Panel Area (Right) */}
-          <div className="2xl:col-span-3 2xl:sticky 2xl:top-6">
+          <div className="xl:col-span-3 xl:sticky xl:top-6">
             <ReviewPanel />
           </div>
         </div>
