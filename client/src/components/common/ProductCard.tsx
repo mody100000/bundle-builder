@@ -20,6 +20,7 @@ export const ProductCard: React.FC<
   stepId = 1,
   onSelectionChange,
   layout = "horizontal",
+  required = false,
 }) => {
   const initialVariant =
     variants.find((v) => v.id === defaultVariantId) || variants[0];
@@ -66,7 +67,8 @@ export const ProductCard: React.FC<
   }, [selectedVariant, currentQuantity, id, title, stepId]);
 
   const handleDecrement = () => {
-    if (currentQuantity > 0) {
+    const minQty = required ? 1 : 0;
+    if (currentQuantity > minQty) {
       updateVariantQuantity(
         stepId,
         id,
@@ -82,7 +84,7 @@ export const ProductCard: React.FC<
   };
 
   const handleIncrement = () => {
-    const maxQty = selectedVariant.maxQuantity ?? Infinity;
+    const maxQty = required ? 1 : (selectedVariant.maxQuantity ?? Infinity);
     if (currentQuantity < maxQty) {
       updateVariantQuantity(
         stepId,
@@ -199,7 +201,7 @@ export const ProductCard: React.FC<
           <div className="flex items-center">
             <button
               onClick={handleDecrement}
-              disabled={currentQuantity <= 0}
+              disabled={required ? currentQuantity <= 1 : currentQuantity <= 0}
               className="w-7 h-7 flex items-center text-lg justify-center rounded-md bg-[#F0F4F7] hover:bg-gray-100 text-gray-600 border border-gray-200 shadow-sm transition-all active:scale-95 cursor-pointer font-bold disabled:bg-white disabled:cursor-not-allowed disabled:border-2 disabled:border-[#E6EBF0] disabled:text-gray-400 "
             >
               -
@@ -210,7 +212,9 @@ export const ProductCard: React.FC<
             <button
               onClick={handleIncrement}
               disabled={
-                currentQuantity >= (selectedVariant.maxQuantity ?? Infinity)
+                required
+                  ? currentQuantity >= 1
+                  : currentQuantity >= (selectedVariant.maxQuantity ?? Infinity)
               }
               className="w-7 h-7 flex items-center justify-center rounded-md bg-[#F0F4F7] hover:bg-gray-100 text-gray-600 border border-gray-200 shadow-sm transition-all active:scale-95 cursor-pointer font-bold disabled:bg-white disabled:cursor-not-allowed disabled:border-2 disabled:border-[#E6EBF0] disabled:text-gray-400 text-lg"
             >

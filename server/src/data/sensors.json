@@ -1,0 +1,66 @@
+[
+  {
+    "id": "prod-sense-hub",
+    "title": "Wyze Sense Hub",
+    "description": "Required control hub for all Wyze Sense security devices.",
+    "variants": [
+      {
+        "id": "sense-hub-white",
+        "name": "White",
+        "image": "/images/Wyze Sense Hub.webp",
+        "thumbnail": "/images/Wyze Sense Hub.webp",
+        "price": 29.92,
+        "discount": 100,
+        "maxQuantity": 1
+      }
+    ]
+  },
+  {
+    "id": "prod-sense-keypad",
+    "title": "Wyze Sense Keypad",
+    "description": "Arm or disarm your system quickly with a secure passcode.",
+    "variants": [
+      {
+        "id": "sense-keypad-white",
+        "name": "White",
+        "image": "/images/Wyze Sense Keypad.webp",
+        "thumbnail": "/images/Wyze Sense Keypad.webp",
+        "price": 29.99,
+        "discount": 0,
+        "maxQuantity": 5
+      }
+    ]
+  },
+  {
+    "id": "prod-sense-motion",
+    "title": "Wyze Sense Motion",
+    "description": "Detects motion up to 30 feet away with a 120-degree field of view.",
+    "variants": [
+      {
+        "id": "sense-motion-white",
+        "name": "White",
+        "image": "/images/Wyze Sense Motion.webp",
+        "thumbnail": "/images/Wyze Sense Motion.webp",
+        "price": 14.99,
+        "discount": 0,
+        "maxQuantity": 5
+      }
+    ]
+  },
+  {
+    "id": "prod-sense-climate",
+    "title": "Wyze Sense Climate Sensor",
+    "description": "Monitors temperature and humidity levels in any room.",
+    "variants": [
+      {
+        "id": "sense-climate-white",
+        "name": "White",
+        "image": "/images/Wyze Sense Climate Sensor.webp",
+        "thumbnail": "/images/Wyze Sense Climate Sensor.webp",
+        "price": 12.99,
+        "discount": 0,
+        "maxQuantity": 5
+      }
+    ]
+  }
+]
