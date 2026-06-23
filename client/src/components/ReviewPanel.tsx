@@ -8,7 +8,11 @@ export function ReviewPanel() {
     (item) => item.quantity > 0,
   );
 
-  const { subtotal, totalSavings } = calculateBundleTotals(selectedList);
+  const hardwareItems = selectedList.filter((item) => item.stepId !== 2);
+  const planItems = selectedList.filter((item) => item.stepId === 2);
+
+  const { subtotal: hardwareSubtotal, totalSavings: hardwareSavings } = calculateBundleTotals(hardwareItems);
+  const { subtotal: planSubtotal, totalSavings: planSavings } = calculateBundleTotals(planItems);
 
   return (
     <div className="bg-white border border-gray-150 rounded-2xl shadow-sm p-6 overflow-hidden">
@@ -70,6 +74,7 @@ export function ReviewPanel() {
                   </span>
                   <span className="text-xs font-bold text-gray-800">
                     {formatPrice(item.price * item.quantity)}
+                    {item.stepId === 2 && "/mo"}
                   </span>
                 </div>
               </div>
@@ -78,25 +83,60 @@ export function ReviewPanel() {
 
           {/* Summary Totals */}
           <div className="border-t border-gray-100 pt-4 space-y-2">
-            <div className="flex justify-between text-xs text-gray-500">
-              <span>Subtotal</span>
-              <span className="font-semibold text-gray-700">
-                {formatPrice(subtotal + totalSavings)}
-              </span>
-            </div>
+            {/* Hardware Total Block */}
+            {hardwareItems.length > 0 && (
+              <>
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>Hardware Subtotal</span>
+                  <span className="font-semibold text-gray-700">
+                    {formatPrice(hardwareSubtotal + hardwareSavings)}
+                  </span>
+                </div>
 
-            {totalSavings > 0 && (
-              <div className="flex justify-between text-xs text-emerald-600 font-medium">
-                <span>Discount Savings</span>
-                <span>-{formatPrice(totalSavings)}</span>
-              </div>
+                {hardwareSavings > 0 && (
+                  <div className="flex justify-between text-xs text-emerald-600 font-medium">
+                    <span>Hardware Savings</span>
+                    <span>-{formatPrice(hardwareSavings)}</span>
+                  </div>
+                )}
+              </>
             )}
 
-            <div className="flex justify-between border-t border-gray-100 pt-3 text-sm font-bold text-gray-900">
-              <span>Total Bundle</span>
-              <span className="text-base text-blue-600">
-                {formatPrice(subtotal)}
-              </span>
+            {/* Plan Total Block */}
+            {planItems.length > 0 && (
+              <>
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>Plan Subtotal</span>
+                  <span className="font-semibold text-gray-700">
+                    {formatPrice(planSubtotal + planSavings)}/mo
+                  </span>
+                </div>
+
+                {planSavings > 0 && (
+                  <div className="flex justify-between text-xs text-emerald-600 font-medium">
+                    <span>Plan Savings</span>
+                    <span>-{formatPrice(planSavings)}/mo</span>
+                  </div>
+                )}
+              </>
+            )}
+
+            {/* Final totals */}
+            <div className="flex flex-col border-t border-gray-100 pt-3 text-sm font-bold text-gray-900 gap-1.5">
+              <div className="flex justify-between items-baseline">
+                <span>Total One-time</span>
+                <span className="text-base text-blue-600 font-black">
+                  {formatPrice(hardwareSubtotal)}
+                </span>
+              </div>
+              {planSubtotal > 0 && (
+                <div className="flex justify-between items-baseline">
+                  <span>Total Monthly</span>
+                  <span className="text-base text-[#4E2FD2] font-black">
+                    {formatPrice(planSubtotal)}/mo
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 

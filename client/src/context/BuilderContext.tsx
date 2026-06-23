@@ -55,6 +55,16 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
   ) => {
     setSelectedVariants((prev) => {
       const next = { ...prev };
+      
+      // For Step 2 (Plans), enforce subscribing to only one plan at a time
+      if (stepId === 2 && quantity > 0) {
+        Object.keys(next).forEach((key) => {
+          if (next[key].stepId === 2) {
+            delete next[key];
+          }
+        });
+      }
+
       if (quantity <= 0) {
         delete next[variantId];
       } else {
