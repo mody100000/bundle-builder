@@ -1,20 +1,38 @@
 import Button from "./common/NextButton";
 import { useBuilder } from "../context/BuilderContext";
 
+import { useCameras } from "../hooks/useCameras";
+import ProductCard from "./common/ProductCard";
+import BuilderLayout from "../layouts/BuilderLayout";
+
 export function Cameras() {
   const { goToNextStep } = useBuilder();
+  const { data: cameras, loading, error } = useCameras();
 
   return (
-    <div className="space-y-4">
-      <div className="text-xs text-gray-500 leading-relaxed">
-        Configure your security camera layout. Choose from different mounts,
-        angles, and color finishes to cover your primary access points.
-      </div>
-      <div className="p-12 bg-slate-50 border border-slate-100 rounded-2xl text-center text-xs text-gray-400 font-medium select-none">
-        Camera Configuration Area (Step 1 Placeholder)
-      </div>
-      <div className="flex justify-end pt-2">
-        <Button onClick={() => goToNextStep(1)}>Next Step</Button>
+    <div>
+      {loading && (
+        <p className="text-center text-gray-400 py-10 text-sm">
+          Loading cameras…
+        </p>
+      )}
+      {error && (
+        <p className="text-center text-red-500 py-6 text-sm">
+          Error: {error.message}
+        </p>
+      )}
+
+      {cameras && (
+        <BuilderLayout
+          items={cameras}
+          renderItem={(camera, layout) => (
+            <ProductCard {...camera} layout={layout} stepId={1} />
+          )}
+        />
+      )}
+
+      <div className="flex justify-center pt-6 pb-3">
+        <Button onClick={() => goToNextStep(1)}>Next: Choose your plan</Button>
       </div>
     </div>
   );

@@ -1,7 +1,12 @@
-import Layout from "./Layout.tsx";
+import Layout from "./layouts/Layout.tsx";
+import { BuilderProvider } from "./context/BuilderContext";
 
 function App() {
-  return <Layout />;
+  return (
+    <BuilderProvider>
+      <Layout />
+    </BuilderProvider>
+  );
 }
 
 export default App;

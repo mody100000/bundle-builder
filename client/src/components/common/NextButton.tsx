@@ -6,26 +6,15 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 export function NextButton({
-  variant = "primary",
-  children,
   className = "",
+  children,
   ...props
 }: ButtonProps) {
   const baseStyle =
-    "px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 active:scale-97 cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed select-none";
-
-  const variants = {
-    primary:
-      "bg-blue-600 hover:bg-blue-700 text-white hover:shadow-md shadow-blue-100",
-    secondary:
-      "bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-200",
-  };
+    "py-3 px-7 border border-[#4E2FD2] rounded-[7px] text-[#4E2FD2] text-xl leading-[24px] tracking-normal font-bold bg-transparent hover:bg-[#4E2FD2]/5 active:scale-97 transition-all duration-300 cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed select-none text-center inline-flex items-center justify-center";
 
   return (
-    <button
-      className={`${baseStyle} ${variants[variant]} ${className}`}
-      {...props}
-    >
+    <button className={`${baseStyle} ${className}`} {...props}>
       {children}
     </button>
   );
