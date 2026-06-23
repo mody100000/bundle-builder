@@ -31,8 +31,8 @@ export function Cameras() {
         />
       )}
 
-      <div className="flex justify-end pt-2">
-        <Button onClick={() => goToNextStep(1)}>Next Step</Button>
+      <div className="flex justify-center pt-6 pb-3">
+        <Button onClick={() => goToNextStep(1)}>Next: Choose your plan</Button>
       </div>
     </div>
   );

@@ -107,11 +107,16 @@ export const ProductCard: React.FC<
         selectedVariant.originalPrice,
       );
 
+  const productQty = Object.values(selectedVariants)
+    .filter((v) => v.productId === id)
+    .reduce((sum, v) => sum + v.quantity, 0);
+  const isSelected = productQty > 0;
+
   return (
     <div
       className={`flex gap-3 p-2 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 w-full group ${
         layout === "vertical" ? "flex-col" : "flex-col sm:flex-row"
-      }`}
+      } border-2 ${isSelected ? "border-[#4E2FD2B2]" : "border-transparent"}`}
     >
       {/* Image and Badge */}
       <div
