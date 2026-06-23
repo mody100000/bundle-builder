@@ -4,12 +4,14 @@ export interface BuilderLayoutProps<T> {
   items: T[];
   renderItem: (item: T, layout: "horizontal" | "vertical") => React.ReactNode;
   getKey?: (item: T, index: number) => string | number;
+  xlCols?: 2 | 3;
 }
 
 export function BuilderLayout<T>({
   items,
   renderItem,
   getKey,
+  xlCols = 2,
 }: BuilderLayoutProps<T>) {
   const getSafeKey = (item: T, index: number): string | number => {
     if (getKey) return getKey(item, index);
@@ -40,20 +42,19 @@ export function BuilderLayout<T>({
           </div>
         ))}
       </div>
-      {/* ── Large screens: 2-column grid, last odd item centered ── */}
-      <div className="hidden xl:grid xl:grid-cols-2 gap-6">
-        {items.map((item, idx) => (
-          <div
-            key={getSafeKey(item, idx)}
-            className={
-              items.length % 2 !== 0 && idx === items.length - 1
-                ? "xl:col-span-2 xl:w-1/2 xl:mx-auto h-full"
-                : "h-full"
-            }
-          >
-            {renderItem(item, "horizontal")}
-          </div>
-        ))}
+      {/* ── Large screens: Grid layout based on xlCols ── */}
+      <div className={`hidden xl:grid gap-6 ${xlCols === 3 ? "xl:grid-cols-3" : "xl:grid-cols-2"}`}>
+        {items.map((item, idx) => {
+          const isLastOdd = xlCols === 2 && items.length % 2 !== 0 && idx === items.length - 1;
+          return (
+            <div
+              key={getSafeKey(item, idx)}
+              className={isLastOdd ? "xl:col-span-2 xl:w-1/2 xl:mx-auto h-full" : "h-full"}
+            >
+              {renderItem(item, xlCols === 3 ? "vertical" : "horizontal")}
+            </div>
+          );
+        })}
       </div>
     </>
   );

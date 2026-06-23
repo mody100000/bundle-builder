@@ -10,12 +10,18 @@ export interface PlanCardProps {
   stepId?: StepId;
 }
 
-export const PlanCard: React.FC<PlanCardProps> = ({
-  plan,
-  layout = "horizontal",
-  stepId = 2,
-}) => {
-  const { id, title, description, price, originalPrice, discountBadge, interval, features, image } = plan;
+export const PlanCard: React.FC<PlanCardProps> = ({ plan, stepId = 2 }) => {
+  const {
+    id,
+    title,
+    description,
+    price,
+    originalPrice,
+    discountBadge,
+    interval,
+    features,
+    image,
+  } = plan;
   const { selectedVariants, updateVariantQuantity } = useBuilder();
 
   // A plan is selected if it's in the selectedVariants list
@@ -33,7 +39,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
         originalPrice,
         title,
         `Monthly Subscription`,
-        image
+        image,
       );
     } else {
       // Subscribe (set quantity to 1)
@@ -46,23 +52,19 @@ export const PlanCard: React.FC<PlanCardProps> = ({
         originalPrice,
         title,
         `Monthly Subscription`,
-        image
+        image,
       );
     }
   };
 
   return (
     <div
-      className={`flex gap-3 p-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 w-full h-full group ${
-        layout === "vertical" ? "flex-col" : "flex-col sm:flex-row"
-      } border-2 ${isSelected ? "border-[#4E2FD2B2]" : "border-transparent"}`}
+      className={`flex gap-3 p-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 w-full h-full group flex-col border-2 ${
+        isSelected ? "border-[#4E2FD2B2]" : "border-transparent"
+      }`}
     >
       {/* Image and Badge */}
-      <div
-        className={`relative shrink-0 rounded-xl overflow-hidden flex items-center justify-center bg-slate-50 transition-colors ${
-          layout === "vertical" ? "w-full aspect-square" : "w-full sm:w-1/4 aspect-square max-h-40 sm:max-h-none"
-        }`}
-      >
+      <div className="relative shrink-0 rounded-xl overflow-hidden flex items-center justify-center h- mx-auto mt-2">
         {discountBadge && (
           <div className="absolute top-2.5 left-2.5 z-10 bg-[#4E2FD2] text-white text-[12px] leading-none tracking-normal px-2 py-1 rounded-xl shadow-sm animate-pulse">
             {discountBadge}
@@ -71,25 +73,26 @@ export const PlanCard: React.FC<PlanCardProps> = ({
         <img
           src={image}
           alt={title}
-          className="w-full h-full object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-105"
+          className="w-full h-full object-contain transition-transform duration-500 ease-out group-hover:scale-105"
         />
       </div>
 
-      {/* Right side: Content */}
-      <div className="flex flex-col justify-between grow px-2 sm:pr-4">
-        <div>
+      <div className="flex flex-col justify-between grow px-2">
+        <div className="mb-4">
           {/* Title */}
-          <h3 className="text-base font-bold text-gray-900 leading-none tracking-[0.6px] mb-2 group-hover:text-[#4E2FD2] transition-colors">
+          <h3 className="text-xl text-center font-bold text-gray-900 leading-none tracking-[0.6px] mb-2 group-hover:text-[#4E2FD2] transition-colors">
             {title}
           </h3>
 
           {/* Description */}
-          <p className="text-xs text-gray-500 leading-[1.3] tracking-[0.6px] mb-3">
-            {description}
-          </p>
+          <div className="">
+            <p className="text-sm bg-[#edf4ff] w-fit p-1.5 m-auto rounded-md leading-[1.3] tracking-[0.6px] mb-3">
+              {description}
+            </p>
+          </div>
 
           {/* Feature List */}
-          <ul className="text-[11px] leading-[1.4] text-gray-600 space-y-1.5 mb-4">
+          <ul className="text-[11px] leading-[1.4] text-gray-600 space-y-1.5 my-4">
             {features.map((feature, idx) => (
               <li key={idx} className="flex items-start gap-1.5">
                 <svg
@@ -136,7 +139,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                Subscribed
+                Selected
               </>
             ) : (
               "Subscribe"
@@ -147,15 +150,15 @@ export const PlanCard: React.FC<PlanCardProps> = ({
           <div className="text-right flex flex-col justify-center min-h-9.5">
             {originalPrice ? (
               <>
-                <span className="text-xs font-normal leading-none tracking-[0.6px] text-[#D8392B] line-through block mb-1">
+                <span className="text-base font-normal leading-none tracking-[0.6px] text-[#D8392B] line-through block mb-0.5">
                   {formatPrice(originalPrice)}/{interval}
                 </span>
-                <span className="text-sm font-bold tracking-[0.6px] text-gray-900 leading-none">
+                <span className="text-base font-normal tracking-[0.6px] text-[#575757] leading-none">
                   {formatPrice(price)}/{interval}
                 </span>
               </>
             ) : (
-              <span className="text-sm font-bold text-gray-900 leading-none">
+              <span className="text-base font-normal tracking-[0.6px] text-[#575757] leading-none">
                 {formatPrice(price)}/{interval}
               </span>
             )}

@@ -36,7 +36,7 @@
     "title": "Cam Unlimited Pro",
     "description": "Covers all your cameras",
     "price": 19.99,
-    "discount": 20,
+    "discount": 0,
     "interval": "mo",
     "features": [
       "Everything in Cam Unlimited, and:",

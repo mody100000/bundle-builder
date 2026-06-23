@@ -10,11 +10,6 @@ export function Plan() {
 
   return (
     <div className="space-y-4">
-      <div className="text-xs text-gray-500 leading-relaxed mb-4">
-        Select your professional monitoring plan. Unlock cellular backup,
-        unlimited cloud recording, and 24/7 law enforcement dispatch.
-      </div>
-
       {loading && (
         <p className="text-center text-gray-400 py-10 text-sm">
           Loading plans…
@@ -29,6 +24,7 @@ export function Plan() {
       {plans && (
         <BuilderLayout
           items={plans}
+          xlCols={3}
           renderItem={(plan, layout) => (
             <PlanCard plan={plan} layout={layout} stepId={2} />
           )}

@@ -121,7 +121,9 @@ export const ProductCard: React.FC<
       {/* Image and Badge */}
       <div
         className={`relative shrink-0 rounded-xl overflow-hidden flex items-center justify-center  group-hover:border-gray-200 transition-colors ${
-          layout === "vertical" ? "w-full aspect-square" : "w-full sm:w-1/4 aspect-square"
+          layout === "vertical"
+            ? "w-full aspect-square"
+            : "w-full sm:w-1/4 aspect-square"
         }`}
       >
         {displayBadge && (
@@ -238,7 +240,7 @@ export const ProductCard: React.FC<
                 </span>
               </>
             ) : (
-              <span className="text-base font-normal text-[#575757] leading-none">
+              <span className="text-base font-normal tracking-[0.6px] text-[#575757] leading-none">
                 {formatPrice(
                   calculateTotal(
                     selectedVariant.price,
