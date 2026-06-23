@@ -1,0 +1,50 @@
+[
+  {
+    "id": "plan-cam-plus",
+    "title": "Cam Plus",
+    "description": "For a single camera",
+    "price": 2.99,
+    "discount": 10,
+    "interval": "mo",
+    "features": [
+      "14-day event video recordings saved in the cloud",
+      "Person, vehicle, package, and pet detection and alerts",
+      "Glass break, Crying, and barking detection and alerts",
+      "Animated Alerts",
+      "Access to My Day insights"
+    ],
+    "image": "/images/plan_cam_plus.png"
+  },
+  {
+    "id": "plan-cam-unlimited",
+    "title": "Cam Unlimited",
+    "description": "Covers all your cameras",
+    "price": 9.99,
+    "discount": 15,
+    "interval": "mo",
+    "features": [
+      "Everything in Cam Plus, and:",
+      "The brand-new multi-cam timeline for live view and events",
+      "Smart Arm/Disarm modes",
+      "Friendly Faces detections and unknown faces alerts",
+      "Animated Alerts"
+    ],
+    "image": "/images/plan_cam_unlimited.png"
+  },
+  {
+    "id": "plan-cam-unlimited-pro",
+    "title": "Cam Unlimited Pro",
+    "description": "Covers all your cameras",
+    "price": 19.99,
+    "discount": 0,
+    "interval": "mo",
+    "features": [
+      "Everything in Cam Unlimited, and:",
+      "Get a detailed understanding of what's happening from your notifications with Descriptive Alerts",
+      "Quickly find specific events in your video history with AI Video Search",
+      "Get access to the option to save up to 60-day event video recording",
+      "Send emergency services to your home even when you're away with 24/7 Emergency Dispatch"
+    ],
+    "image": "/images/plan_cam_unlimited_pro.png"
+  }
+]
