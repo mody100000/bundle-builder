@@ -35,7 +35,7 @@ export function BuilderLayout<T>({
       {/* ── Medium / tablet screens: vertical cards, responsive columns ── */}
       <div className="hidden md:grid 2xl:hidden grid-cols-2 lg:grid-cols-3 gap-4 pb-2">
         {items.map((item, idx) => (
-          <div key={getSafeKey(item, idx)} className="w-full">
+          <div key={getSafeKey(item, idx)} className="w-full h-full">
             {renderItem(item, "vertical")}
           </div>
         ))}
@@ -47,8 +47,8 @@ export function BuilderLayout<T>({
             key={getSafeKey(item, idx)}
             className={
               items.length % 2 !== 0 && idx === items.length - 1
-                ? "2xl:col-span-2 2xl:w-1/2 2xl:mx-auto"
-                : ""
+                ? "2xl:col-span-2 2xl:w-1/2 2xl:mx-auto h-full"
+                : "h-full"
             }
           >
             {renderItem(item, "horizontal")}

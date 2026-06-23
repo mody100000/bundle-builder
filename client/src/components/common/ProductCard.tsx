@@ -114,14 +114,14 @@ export const ProductCard: React.FC<
 
   return (
     <div
-      className={`flex gap-3 p-2 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 w-full group ${
+      className={`flex gap-3 p-2 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 w-full h-full group ${
         layout === "vertical" ? "flex-col" : "flex-col sm:flex-row"
       } border-2 ${isSelected ? "border-[#4E2FD2B2]" : "border-transparent"}`}
     >
       {/* Image and Badge */}
       <div
         className={`relative shrink-0 rounded-xl overflow-hidden flex items-center justify-center  group-hover:border-gray-200 transition-colors ${
-          layout === "vertical" ? "w-full h-34" : "w-full sm:w-34 h-40"
+          layout === "vertical" ? "w-full aspect-square" : "w-full sm:w-1/4 aspect-square"
         }`}
       >
         {displayBadge && (
