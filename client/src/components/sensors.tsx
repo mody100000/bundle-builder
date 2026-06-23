@@ -10,11 +10,6 @@ export function Sensors() {
 
   return (
     <div className="space-y-4">
-      <div className="text-xs text-gray-500 leading-relaxed mb-4">
-        Secure entryways and rooms with smart motion detectors and door/window
-        opening sensors.
-      </div>
-
       {loading && (
         <p className="text-center text-gray-400 py-10 text-sm">
           Loading sensors…

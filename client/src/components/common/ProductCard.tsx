@@ -160,39 +160,41 @@ export const ProductCard: React.FC<
           </p>
 
           {/* Color Selector */}
-          <div className="">
-            <div className="flex flex-wrap gap-2">
-              {variants.map((variant) => {
-                const isSelected = selectedVariant.id === variant.id;
-                return (
-                  <button
-                    key={variant.id}
-                    onClick={() => setSelectedVariant(variant)}
-                    className={`flex items-center justify-center rounded-xs border text-center transition-all duration-200 cursor-pointer min-w-16 ${
-                      isSelected
-                        ? "border-[0.5px] border-[#0AA288] bg-[#1DF0BB0A] shadow-sm"
-                        : "border-[0.5px] border-[#CCCCCC] bg-white "
-                    }`}
-                  >
-                    <div className="w-6 h-6 rounded-md overflow-hidden flex items-center justify-center">
-                      <img
-                        src={variant.thumbnail}
-                        alt={variant.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <span
-                      className={
-                        "text-[10px] text-[#1F1F1F] leading-none tracking-[0.6px] truncate max-w-14"
-                      }
+          {variants.length > 1 && (
+            <div className="">
+              <div className="flex flex-wrap gap-2">
+                {variants.map((variant) => {
+                  const isSelected = selectedVariant.id === variant.id;
+                  return (
+                    <button
+                      key={variant.id}
+                      onClick={() => setSelectedVariant(variant)}
+                      className={`flex items-center justify-center rounded-xs border text-center transition-all duration-200 cursor-pointer min-w-16 ${
+                        isSelected
+                          ? "border-[0.5px] border-[#0AA288] bg-[#1DF0BB0A] shadow-sm"
+                          : "border-[0.5px] border-[#CCCCCC] bg-white "
+                      }`}
                     >
-                      {variant.name}
-                    </span>
-                  </button>
-                );
-              })}
+                      <div className="w-6 h-6 rounded-md overflow-hidden flex items-center justify-center">
+                        <img
+                          src={variant.thumbnail}
+                          alt={variant.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span
+                        className={
+                          "text-[10px] text-[#1F1F1F] leading-none tracking-[0.6px] truncate max-w-14"
+                        }
+                      >
+                        {variant.name}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Quantity & Price Row */}
