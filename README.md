@@ -9,7 +9,7 @@ Features a high-fidelity, interactive multi-step bundle builder with a live orde
 
 <img width="1920" height="1080" alt="2026-06-24-191908_hyprshot" src="https://github.com/user-attachments/assets/e4805193-e7e0-4116-895e-593d9ece0f44" />
 <br><br>
-<img width="1920" height="1080" alt="2026-06-24-191908_hyprshot" src="https://github.com/user-attachments/assets/0ef96a89-65cc-4ce6-8a3a-1e0ba45f7875" />
+<img width="1902" height="2898" alt="bundle-builder" src="https://github.com/user-attachments/assets/03c4d3ca-1124-4269-9629-844992956abf" />
 <br><br>
 <img width="1902" height="3333" alt="bundle-builder (1)" src="https://github.com/user-attachments/assets/e86beb87-182b-4bb1-ab87-1b643f86ec4c" />
 <br><br>
