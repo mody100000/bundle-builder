@@ -1,57 +1,25 @@
 # Frontend Take-Home Bundle Builder
 
-A modular, data-driven, two-column React prototype for a multi-step home security system bundle builder. This project includes a live review panel, multi-step accordion builder, variant-specific quantity tracking, and local client-side configuration persistence.
+A monorepo built with React + Vite (frontend) and Express (backend), both in TypeScript.
+Features a high-fidelity, interactive multi-step bundle builder with a live order summary panel.
 
 ---
 
-## 🚀 Features Implemented
+## 📸 Screenshots
 
-### 1. Left Builder: 4-Step Accordion Flow
-- Walks the shopper through:
-  1. **Choose your cameras**
-  2. **Choose your plan**
-  3. **Choose your sensors**
-  4. **Add extra protection**
-- Dynamic header state:
-  - Header displays "Step X of 4", step icons, and titles.
-  - Active step is expanded and styled with a highlight background.
-  - Right indicator shows **"N selected"** where *N* reflects the count of **distinct products** (unique `productId`s with quantity > 0) in that step, plus up/down chevrons.
-  - Expanded step ends with a custom "Next: ..." action button that advances steps.
-
-### 2. Product & Plan Cards
-- Fully responsive grid layouts.
-- Product cards support optional discount badges (e.g. "Save 22%"), descriptions, color variants, quantity steppers, and pricing calculations.
-- Card highlights with a purple border in its **selected state** if any of its variants have a quantity greater than zero.
-
-### 3. The Variant Selector & State Flow
-- Color chips show thumbnails and labels.
-- **Variant-specific quantities:** Selected quantity stepper is bound to the currently active color chip. Switching variants displays the quantity of the active chip while preserving the quantity of the other colors.
-- All variants with a count greater than zero are listed individually on the live review panel.
-- Doorbell products with no color variants automatically hide the selector, binding the stepper directly to the product.
-
-### 4. Live Review Panel ("Your security system")
-- Grouped list of selected items under category subheadings (**Cameras, Sensors, Accessories, Plan**).
-- Displays thumbnail, formatted name (with variant details), quantity adjusters, and price.
-- Plans hide the quantity adjusters, showing only subscribe/unsubscribe controls.
-- Required items (like the Sense Hub) disable increment/decrement buttons to lock selection.
-- Displays free shipping banner, satisfying Affirm finance badge (calculates monthly payments), total savings, total price with struck-through original price, and checkout/save actions.
-
-### 5. Seeding & Config Persistence
-- **Default Seed State:** Initial state loads preloaded matching the design requirements (required Sense Hub sensor, Cam Unlimited monthly plan, and required Solar Panel accessory) with zero cameras selected.
-- **Client-Side Persistence:** "Save my system for later" stores current configuration. The configuration is stored in the browser's `localStorage` and synchronizes with the backend database.
-- Reloading the page or visiting later restores the system configuration exactly as it was saved.
-- **Checkout Action:** Places the order, clears local state, and deletes stored data.
+_Screenshots can be added here to showcase the desktop and mobile views of the builder and review panel._
 
 ---
 
-## 📂 Project Structure
+## 📂 Folder Structure
 
 ```
 ├── client/                 # React & Vite Frontend
 │   ├── src/
 │   │   ├── api/            # API client fetch handlers
 │   │   ├── assets/         # Gilroy fonts and images
-│   │   ├── components/     # UI components (ReviewPanel, AccordionStep, ProductCard, etc.)
+│   │   ├── components/     # Step-specific UI components (Builder, ReviewPanel, AccordionStep)
+│   │   │   └── common/     # Reusable UI components (ProductCard, PlanCard, NextButton, ProductModal, Modal)
 │   │   ├── context/        # BuilderContext state management
 │   │   ├── hooks/          # API resource custom hooks
 │   │   └── types/          # TypeScript interfaces
@@ -64,34 +32,81 @@ A modular, data-driven, two-column React prototype for a multi-step home securit
 
 ---
 
-## ⚙️ Run Instructions
+## ⚙️ Installation & Run
 
 Make sure you have [Node.js](https://nodejs.org/) installed (v18+ recommended).
 
 ### 1. Install Dependencies
+
 Run the install command from the project root. The configured postinstall scripts will automatically install client and server packages:
+
 ```bash
 npm install
 ```
 
 ### 2. Start Development Servers
+
 Start both the React client and Express backend concurrently:
+
 ```bash
 npm run dev
 ```
 
 The application will launch on:
+
 - **Frontend client:** `http://localhost:5174/` (or the next available port)
 - **Backend server:** `http://localhost:5000/`
 
 ---
 
-## 🧠 Decisions & Tradeoffs
+## 🛠️ Tech Stack
 
-1. **Dual Configuration Persistence:**
-   - *Decision:* Implemented persistence in both `localStorage` and the backend Express JSON database. 
-   - *Tradeoff:* On page mount, `localStorage` is checked first. If found, it immediately renders the user's config offline. Otherwise, it falls back to fetching the default seed configuration from the backend, preventing delay.
-2. **Distinct Product Selections Count:**
-   - *Decision:* The "N selected" counter was calculated by grouping selections by `productId` rather than summing up item quantities. This ensures that selecting 3 variants of the same camera shows "1 selected" in the step header, aligning with standard e-commerce expectations.
-3. **Required Accessories:**
-   - *Decision:* Marked the pre-populated accessory (Solar Panel) as `required: true` in the initial configuration seed. This disables its quantity adjusters in both the builder and the review panel, meeting the design instruction: *"review panel's pre-populated sensors, accessory, and plan, which have no add-control in this particular view."*
+### Frontend
+- **React (v19):** Declarative component-based UI development.
+- **TypeScript:** For compile-time type safety.
+- **Vite:** High-performance, instant hot-reloading dev server and build tool.
+- **Tailwind CSS (v4):** Modern, utility-first CSS styling.
+- **React Toastify:** For responsive UI notifications (e.g. system saved/checkout confirmations).
+
+### Backend
+- **Node.js & Express:** Lightweight, fast routing engine to handle configurations and product APIs.
+- **TypeScript & ts-node-dev:** For end-to-end type-safe development environments with automatic hot-reloads.
+
+### Tooling
+- **Concurrently:** Enables running the React client and Express backend simultaneously with a single root command.
+
+---
+
+## 🚀 Features Implemented
+
+This project builds a state-of-the-art e-commerce experience featuring:
+
+### 1. Multi-Step Accordion Flow
+
+- Walks the shopper through cameras, plans, sensors, and accessories.
+- The active step is highlighted with distinct borders/backgrounds and features standard up/down chevrons.
+- Step headers show a **"N selected"** counter that reflects the number of **distinct products** selected (unique `productId`s with quantity > 0), preventing multiple variants of the same product from double-counting.
+- Includes smooth scroll triggers and "Next: ..." action buttons that advance to the next step.
+
+### 2. Product Variant Selection
+
+- High-fidelity product cards render optional discount badges, descriptions, custom color variants, and quantity selectors.
+- **Variant-specific quantities:** Selected quantity stepper is bound to the active color variant chip. Switching variants displays the quantity of the active chip while preserving the quantity of other colors.
+- All selected variants with a count greater than zero are listed individually on the live review panel.
+- Doorbell products with no variants automatically hide the selector, binding the stepper directly to the product.
+
+### 3. Live Review Panel
+
+- Grouped list of selected items under category subheadings (**Cameras, Sensors, Accessories, Plan**).
+- Displays thumbnails, formatted names (with variant details), quantity adjusters, and price.
+- Plans hide the quantity adjusters, showing only subscribe/unsubscribe controls.
+- Required items (like the Sense Hub) disable increment/decrement buttons to lock selection.
+- Displays free shipping banner, satisfying Affirm finance badge (calculates monthly payments), total savings, total price with struck-through original price, and checkout/save actions.
+
+### 4. How We Save the Data (Configuration Persistence)
+
+- **State Seeding:** On first load, the app is preloaded with the default seed state matching the designs (required Sense Hub sensor, Cam Unlimited monthly plan, and required Solar Panel accessory) with zero cameras.
+- **Client-Side Persistence:** When a shopper clicks **"Save my system for later"**, the current configuration state is saved to the browser's `localStorage` using their unique `systemId`.
+- **Server-Side Persistence:** Concurrently, the configuration is synchronized with the backend database. The backend writes this configuration to a dedicated file (`config_<systemId>.json`) in its server data directory.
+- **Restoration:** On page reload or return visit, the system checks `localStorage` first to restore state instantly without layout shift. If not cached locally, it falls back to fetching from the backend database using the visitor's `systemId`.
+- **Checkout Action:** Places the order, clears local state, and deletes stored data from both `localStorage` and the backend.
