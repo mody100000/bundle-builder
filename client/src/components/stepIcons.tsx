@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-export const stepIcons = {
+const stepIcons = {
   1: "/icons/camera.svg",
   2: "/icons/sensors.svg",
   3: "/icons/protection.svg",

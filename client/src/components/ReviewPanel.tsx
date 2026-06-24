@@ -4,7 +4,7 @@ import { formatPrice } from "../utils/price";
 import ReviewItem from "./ReviewItem";
 
 export function ReviewPanel() {
-  const { selectedVariants } = useBuilder();
+  const { selectedVariants, saveSystemForLater, checkout } = useBuilder();
 
   const selectedList = Object.values(selectedVariants).filter(
     (item) => item.quantity > 0,
@@ -181,13 +181,19 @@ export function ReviewPanel() {
                 )}
 
                 {/* Checkout Action Button */}
-                <button className="w-full py-3.25 bg-[#4E2FD2] hover:bg-[#3a20a0] text-white font-bold rounded-sm text-[17px] leading-none tracking-normal shadow-md hover:shadow-lg transition-all cursor-pointer select-none mb-0">
+                <button
+                  onClick={checkout}
+                  className="w-full py-3.25 bg-[#4E2FD2] hover:bg-[#3a20a0] text-white font-bold rounded-sm text-[17px] leading-none tracking-normal shadow-md hover:shadow-lg transition-all cursor-pointer select-none mb-0"
+                >
                   Checkout
                 </button>
 
                 {/* Save link */}
                 <div className="text-center">
-                  <button className="text-sm text-[#484848] hover:text-gray-500 underline leading-snug tracking-[-0.02px] cursor-pointer bg-transparent border-none pt-1.5 pb-3 select-none">
+                  <button
+                    onClick={saveSystemForLater}
+                    className="text-sm text-[#484848] hover:text-gray-500 underline leading-snug tracking-[-0.02px] cursor-pointer bg-transparent border-none pt-1.5 pb-3 select-none"
+                  >
                     Save my system for later
                   </button>
                 </div>
@@ -244,13 +250,19 @@ export function ReviewPanel() {
                 )}
 
                 {/* Checkout Action Button */}
-                <button className="w-full py-3.25 bg-[#4E2FD2] hover:bg-[#3a20a0] text-white font-bold rounded-sm text-[17px] leading-none tracking-normal shadow-md hover:shadow-lg transition-all cursor-pointer select-none mb-0">
+                <button
+                  onClick={checkout}
+                  className="w-full py-3.25 bg-[#4E2FD2] hover:bg-[#3a20a0] text-white font-bold rounded-sm text-[17px] leading-none tracking-normal shadow-md hover:shadow-lg transition-all cursor-pointer select-none mb-0"
+                >
                   Checkout
                 </button>
 
                 {/* Save link */}
                 <div className="text-center pt-2">
-                  <button className="text-sm text-[#484848] hover:text-gray-500 underline leading-snug tracking-[-0.02px] cursor-pointer bg-transparent border-none select-none">
+                  <button
+                    onClick={saveSystemForLater}
+                    className="text-sm text-[#484848] hover:text-gray-500 underline leading-snug tracking-[-0.02px] cursor-pointer bg-transparent border-none select-none"
+                  >
                     Save my system for later
                   </button>
                 </div>

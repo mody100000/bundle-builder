@@ -1,7 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { INITIAL_STEP, LAST_STEP, type StepId } from "./constants";
 import { type Selection } from "../types/product";
+import { fetchConfig, saveConfig as apiSaveConfig } from "../api/config";
+import { toast } from "react-toastify";
 
 export interface BuilderContextType {
   openSteps: Record<StepId, boolean>;
@@ -22,6 +24,8 @@ export interface BuilderContextType {
     required?: boolean,
     maxQuantity?: number
   ) => void;
+  saveSystemForLater: () => Promise<void>;
+  checkout: () => Promise<void>;
 }
 
 const BuilderContext = createContext<BuilderContextType | undefined>(undefined);
@@ -36,7 +40,83 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
     initial[INITIAL_STEP] = true;
     return initial;
   });
-  const [selectedVariants, setSelectedVariants] = useState<Record<string, Selection>>({});
+  const [systemId] = useState<string>(() => {
+    let id = localStorage.getItem("systemId");
+    if (!id) {
+      if (typeof crypto !== "undefined" && crypto.randomUUID) {
+        id = crypto.randomUUID();
+      } else {
+        id = "usr_" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      }
+      localStorage.setItem("systemId", id);
+    }
+    return id;
+  });
+
+  const [selectedVariants, setSelectedVariants] = useState<Record<string, Selection>>(() => {
+    const id = localStorage.getItem("systemId");
+    if (id) {
+      const savedLocal = localStorage.getItem(`security_system_config_${id}`);
+      if (savedLocal) {
+        try {
+          const parsed = JSON.parse(savedLocal);
+          if (parsed && typeof parsed === "object" && Object.keys(parsed).length > 0) {
+            return parsed as Record<string, Selection>;
+          }
+        } catch (e) {
+          console.error("Failed to parse local config:", e);
+        }
+      }
+    }
+    return {};
+  });
+
+  useEffect(() => {
+    if (!systemId) return;
+    const savedLocal = localStorage.getItem(`security_system_config_${systemId}`);
+    if (!savedLocal) {
+      // Fallback/Initial load from backend
+      fetchConfig(systemId)
+        .then((data) => {
+          if (data && typeof data === "object" && Object.keys(data).length > 0) {
+            setSelectedVariants(data);
+          }
+        })
+        .catch((err) => {
+          console.error("Failed to load config on mount:", err);
+        });
+    }
+  }, [systemId]);
+
+  const saveSystemForLater = async () => {
+    if (!systemId) return;
+    try {
+      // Save to client-side localStorage
+      localStorage.setItem(`security_system_config_${systemId}`, JSON.stringify(selectedVariants));
+      // Save to backend API
+      await apiSaveConfig(systemId, selectedVariants);
+      toast.success("Your security system configuration has been saved successfully!");
+    } catch (error) {
+      console.error("Failed to save config:", error);
+      toast.error("Failed to save your security system configuration. Please try again.");
+    }
+  };
+
+  const checkout = async () => {
+    if (!systemId) return;
+    try {
+      // Clear localStorage
+      localStorage.removeItem(`security_system_config_${systemId}`);
+      // Clear saved data on the backend
+      await apiSaveConfig(systemId, {});
+      // Clear local state
+      setSelectedVariants({});
+      toast.success("Checkout completed! Your system configuration has been placed and cleared.");
+    } catch (error) {
+      console.error("Failed to complete checkout:", error);
+      toast.error("Failed to complete checkout. Please try again.");
+    }
+  };
 
   const toggleStep = (id: StepId) => {
     setOpenSteps((prev) => ({
@@ -118,20 +198,28 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
     });
   };
 
-  // Derive selection count per step from selectedVariants quantities
+  // Derive selection count per step from distinct products with quantity > 0
   const selections = {
-    1: Object.values(selectedVariants)
-      .filter((v) => v.stepId === 1)
-      .reduce((sum, v) => sum + v.quantity, 0),
-    2: Object.values(selectedVariants)
-      .filter((v) => v.stepId === 2)
-      .reduce((sum, v) => sum + v.quantity, 0),
-    3: Object.values(selectedVariants)
-      .filter((v) => v.stepId === 3)
-      .reduce((sum, v) => sum + v.quantity, 0),
-    4: Object.values(selectedVariants)
-      .filter((v) => v.stepId === 4)
-      .reduce((sum, v) => sum + v.quantity, 0),
+    1: new Set(
+      Object.values(selectedVariants)
+        .filter((v) => v.stepId === 1 && v.quantity > 0)
+        .map((v) => v.productId)
+    ).size,
+    2: new Set(
+      Object.values(selectedVariants)
+        .filter((v) => v.stepId === 2 && v.quantity > 0)
+        .map((v) => v.productId)
+    ).size,
+    3: new Set(
+      Object.values(selectedVariants)
+        .filter((v) => v.stepId === 3 && v.quantity > 0)
+        .map((v) => v.productId)
+    ).size,
+    4: new Set(
+      Object.values(selectedVariants)
+        .filter((v) => v.stepId === 4 && v.quantity > 0)
+        .map((v) => v.productId)
+    ).size,
   };
 
   return (
@@ -143,6 +231,8 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
         selections,
         selectedVariants,
         updateVariantQuantity,
+        saveSystemForLater,
+        checkout,
       }}
     >
       {children}
