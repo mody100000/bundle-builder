@@ -3,48 +3,6 @@ import { useBuilder } from "../context/BuilderContext";
 import { formatPrice } from "../utils/price";
 import ReviewItem from "./ReviewItem";
 
-const TruckIcon = () => (
-  <svg
-    className="w-5 h-5 text-[#0AA288]"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2h-3V5a2 2 0 00-2-2H3a2 2 0 00-2 2v10a2 2 0 002 2h2m12 0a2 2 0 11-4 0m4 0a2 2 0 10-4 0m-8 0a2 2 0 11-4 0m4 0a2 2 0 10-4 0m-2-5h9M5 5h5M5 8h5"
-    />
-  </svg>
-);
-
-const SatisfactionSeal = () => (
-  <div className="relative shrink-0 flex items-center justify-center w-[74px] h-[74px]">
-    <svg
-      className="absolute w-full h-full text-[#4E2FD2]"
-      viewBox="0 0 100 100"
-      fill="currentColor"
-    >
-      <path d="M50,5 C52.5,5 54,7 56.5,7.5 C59,8 61.5,7 63.8,8 C66.1,9 67.5,11.2 69.5,12.5 C71.5,13.8 74,13.8 75.7,15.5 C77.4,17.2 77.4,19.7 78.8,21.7 C80.2,23.7 82.5,24.5 83.5,26.7 C84.5,28.9 84,31.4 84.7,33.7 C85.4,36 87,37.7 87.3,40.1 C87.6,42.5 86.4,44.8 86.4,47.3 C86.4,49.8 87.6,52.1 87.3,54.5 C87,56.9 85.4,58.6 84.7,60.9 C84,63.2 84.5,65.7 83.5,67.9 C82.5,70.1 80.2,70.9 78.8,72.9 C77.4,74.9 77.4,77.4 75.7,79.1 C74,80.8 71.5,80.8 69.5,82.1 C67.5,83.4 66.1,85.6 63.8,86.6 C61.5,87.6 59,86.6 56.5,87.1 C54,87.6 52.5,89.6 50,89.6 C47.5,89.6 46,87.6 43.5,87.1 C41,86.6 38.5,87.6 36.2,86.6 C33.9,85.6 32.5,83.4 30.5,82.1 C28.5,80.8 26,80.8 24.3,79.1 C22.6,77.4 22.6,74.9 21.2,72.9 C19.8,70.9 17.5,70.1 16.5,67.9 C15.5,65.7 16,63.2 15.3,60.9 C14.6,58.6 13,56.9 12.7,54.5 C12.4,52.1 13.6,49.8 13.6,47.3 C13.6,44.8 12.4,42.5 12.7,40.1 C13,37.7 14.6,36 15.3,33.7 C16,31.4 15.5,28.9 16.5,26.7 C17.5,24.5 19.8,23.7 21.2,21.7 C22.6,19.7 22.6,17.2 24.3,15.5 C26,13.8 28.5,13.8 30.5,12.5 C32.5,11.2 33.9,9 36.2,8 C38.5,7 41,8 43.5,7.5 C46,7 47.5,5 50,5 Z" />
-    </svg>
-    <div className="absolute w-[66px] h-[66px] rounded-full border border-dashed border-white/30 flex flex-col items-center justify-center text-center text-white p-1 select-none">
-      <span className="text-[10px] font-black leading-none tracking-tight">
-        100%
-      </span>
-      <span className="text-[6px] leading-[1.1] font-bold mt-0.5 uppercase tracking-tighter">
-        Wyze
-      </span>
-      <span className="text-[5px] leading-[1.1] text-white/95 font-medium tracking-tighter uppercase">
-        Satisfaction
-      </span>
-      <span className="text-[5px] leading-[1.1] text-white/95 font-medium tracking-tighter uppercase">
-        Guarantee
-      </span>
-    </div>
-  </div>
-);
-
 export function ReviewPanel() {
   const { selectedVariants } = useBuilder();
 
@@ -145,8 +103,12 @@ export function ReviewPanel() {
               {/* Fast Shipping row */}
               <div className="flex items-center justify-between gap-3 text-xs">
                 <div className="flex items-center">
-                  <div className="w-12 h-12 rounded-xl bg-white border border-gray-100/50 flex items-center justify-center p-1 shrink-0 shadow-xs">
-                    <TruckIcon />
+                  <div className="w-12 h-12 rounded-xl bg-white border border-gray-100/50 flex items-center justify-center shrink-0 shadow-xs">
+                    <img
+                      src="/icons/Fast Shipping.svg"
+                      alt="Fast Shipping"
+                      className="w-full h-full object-contain"
+                    />
                   </div>
                   <h4 className="text-sm text-[#0B0D10] ml-3 truncate leading-4 tracking-[0.005em]">
                     Fast Shipping
@@ -161,52 +123,53 @@ export function ReviewPanel() {
                 </div>
               </div>
             </div>
-
-            {/* Separator before Totals */}
-            <hr className="border-t border-[#CED6DE] my-5" />
-
             {/* Bottom section: Seal, financing badge, and grand totals */}
             <div className="flex items-center justify-between gap-4">
               {/* Left: Guarantee Seal */}
-              <SatisfactionSeal />
+              <img
+                src="/brand badge.png"
+                alt="Satisfaction Guarantee"
+                className="w-19.5 h-19.5 shrink-0 object-contain"
+              />
 
               {/* Right: Pricing information */}
               <div className="grow flex flex-col items-end">
                 {/* Affirm Financing Badge */}
-                <span className="bg-[#4E2FD2] text-white text-[9px] font-bold px-2 py-0.5 rounded-sm select-none mb-1 text-right">
+                <span className="bg-[#4E2FD2] text-white text-xs font-bold px-2 py-1 rounded-sm select-none mb-1 text-right leading-none tracking-tighter [leading-trim:cap] [text-edge:cap]">
                   as low as {formatPrice(totalSale * 0.10215)}/mo
                 </span>
 
                 {/* Struck-through Original Total */}
-                {totalSavings > 0 && (
-                  <span className="text-xs font-semibold text-gray-400 line-through leading-none block mb-0.5">
-                    {formatPrice(totalOriginal)}
-                  </span>
-                )}
+                <div className="flex flex-row items-end gap-2">
+                  {totalSavings > 0 && (
+                    <span className="text-[18px] text-[#6F7882] leading-5 tracking-[0.0025em] line-through block mb-0.5">
+                      {formatPrice(totalOriginal)}
+                    </span>
+                  )}
 
-                {/* Bold Sale Total */}
-                <span className="text-[28px] font-black text-[#4E2FD2] leading-none">
-                  {formatPrice(totalSale)}
-                </span>
+                  {/* Bold Sale Total */}
+                  <span className="text-[24px] font-black text-[#4E2FD2] leading-8 tracking-[-0.0013em]">
+                    {formatPrice(totalSale)}
+                  </span>
+                </div>
               </div>
             </div>
-
             {/* Congrats savings message */}
             {totalSavings > 0 && (
-              <p className="text-[11px] font-black text-[#0AA288] text-center tracking-normal leading-tight mt-1 select-none">
+              <p className="text-xs text-[#0AA288] text-center leading-none tracking-[-0.06px] mb-0 pb-2">
                 Congrats! You're saving {formatPrice(totalSavings)} on your
                 security bundle!
               </p>
             )}
 
             {/* Checkout Action Button */}
-            <button className="w-full py-4 bg-[#4E2FD2] hover:bg-[#3a20a0] text-white rounded-2xl text-sm font-black shadow-md hover:shadow-lg transition-all cursor-pointer select-none">
+            <button className="w-full py-3.25 bg-[#4E2FD2] hover:bg-[#3a20a0] text-white font-bold rounded-sm text-[17px] leading-none tracking-normal shadow-md hover:shadow-lg transition-all cursor-pointer select-none mb-0">
               Checkout
             </button>
 
             {/* Save link */}
             <div className="text-center">
-              <button className="text-[11px] font-bold text-gray-400 hover:text-gray-600 underline cursor-pointer bg-transparent border-none p-0 select-none">
+              <button className="text-sm text-[#484848] hover:text-gray-500 underline leading-snug tracking-[-0.02px] cursor-pointer bg-transparent border-none pt-1.5 pb-3 select-none">
                 Save my system for later
               </button>
             </div>
