@@ -33,7 +33,16 @@ router.get("/", (req, res) => {
       return res.status(500).json({ error: "Failed to read configuration." });
     }
   } else {
-    // Return empty configuration if it doesn't exist yet
+    // Return default seed configuration if it doesn't exist yet
+    const defaultFilePath = path.join(__dirname, "../data/config.json");
+    if (fs.existsSync(defaultFilePath)) {
+      try {
+        const data = fs.readFileSync(defaultFilePath, "utf-8");
+        return res.json(JSON.parse(data));
+      } catch (error) {
+        console.error("Error reading default config.json:", error);
+      }
+    }
     return res.json({});
   }
 });

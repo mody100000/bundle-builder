@@ -53,24 +53,47 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
     return id;
   });
 
-  const [selectedVariants, setSelectedVariants] = useState<Record<string, Selection>>({});
+  const [selectedVariants, setSelectedVariants] = useState<Record<string, Selection>>(() => {
+    const id = localStorage.getItem("systemId");
+    if (id) {
+      const savedLocal = localStorage.getItem(`security_system_config_${id}`);
+      if (savedLocal) {
+        try {
+          const parsed = JSON.parse(savedLocal);
+          if (parsed && typeof parsed === "object" && Object.keys(parsed).length > 0) {
+            return parsed as Record<string, Selection>;
+          }
+        } catch (e) {
+          console.error("Failed to parse local config:", e);
+        }
+      }
+    }
+    return {};
+  });
 
   useEffect(() => {
     if (!systemId) return;
-    fetchConfig(systemId)
-      .then((data) => {
-        if (data && typeof data === "object" && Object.keys(data).length > 0) {
-          setSelectedVariants(data);
-        }
-      })
-      .catch((err) => {
-        console.error("Failed to load config on mount:", err);
-      });
+    const savedLocal = localStorage.getItem(`security_system_config_${systemId}`);
+    if (!savedLocal) {
+      // Fallback/Initial load from backend
+      fetchConfig(systemId)
+        .then((data) => {
+          if (data && typeof data === "object" && Object.keys(data).length > 0) {
+            setSelectedVariants(data);
+          }
+        })
+        .catch((err) => {
+          console.error("Failed to load config on mount:", err);
+        });
+    }
   }, [systemId]);
 
   const saveSystemForLater = async () => {
     if (!systemId) return;
     try {
+      // Save to client-side localStorage
+      localStorage.setItem(`security_system_config_${systemId}`, JSON.stringify(selectedVariants));
+      // Save to backend API
       await apiSaveConfig(systemId, selectedVariants);
       toast.success("Your security system configuration has been saved successfully!");
     } catch (error) {
@@ -82,6 +105,8 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
   const checkout = async () => {
     if (!systemId) return;
     try {
+      // Clear localStorage
+      localStorage.removeItem(`security_system_config_${systemId}`);
       // Clear saved data on the backend
       await apiSaveConfig(systemId, {});
       // Clear local state
@@ -173,20 +198,28 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
     });
   };
 
-  // Derive selection count per step from selectedVariants quantities
+  // Derive selection count per step from distinct products with quantity > 0
   const selections = {
-    1: Object.values(selectedVariants)
-      .filter((v) => v.stepId === 1)
-      .reduce((sum, v) => sum + v.quantity, 0),
-    2: Object.values(selectedVariants)
-      .filter((v) => v.stepId === 2)
-      .reduce((sum, v) => sum + v.quantity, 0),
-    3: Object.values(selectedVariants)
-      .filter((v) => v.stepId === 3)
-      .reduce((sum, v) => sum + v.quantity, 0),
-    4: Object.values(selectedVariants)
-      .filter((v) => v.stepId === 4)
-      .reduce((sum, v) => sum + v.quantity, 0),
+    1: new Set(
+      Object.values(selectedVariants)
+        .filter((v) => v.stepId === 1 && v.quantity > 0)
+        .map((v) => v.productId)
+    ).size,
+    2: new Set(
+      Object.values(selectedVariants)
+        .filter((v) => v.stepId === 2 && v.quantity > 0)
+        .map((v) => v.productId)
+    ).size,
+    3: new Set(
+      Object.values(selectedVariants)
+        .filter((v) => v.stepId === 3 && v.quantity > 0)
+        .map((v) => v.productId)
+    ).size,
+    4: new Set(
+      Object.values(selectedVariants)
+        .filter((v) => v.stepId === 4 && v.quantity > 0)
+        .map((v) => v.productId)
+    ).size,
   };
 
   return (
