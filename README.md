@@ -7,7 +7,13 @@ Features a high-fidelity, interactive multi-step bundle builder with a live orde
 
 ## 📸 Screenshots
 
-_Screenshots can be added here to showcase the desktop and mobile views of the builder and review panel._
+<img width="1920" height="1080" alt="2026-06-24-191908_hyprshot" src="https://github.com/user-attachments/assets/e4805193-e7e0-4116-895e-593d9ece0f44" />
+<br><br>
+<img width="1920" height="1080" alt="2026-06-24-191908_hyprshot" src="https://github.com/user-attachments/assets/0ef96a89-65cc-4ce6-8a3a-1e0ba45f7875" />
+<br><br>
+<img width="1902" height="3333" alt="bundle-builder (1)" src="https://github.com/user-attachments/assets/e86beb87-182b-4bb1-ab87-1b643f86ec4c" />
+<br><br>
+<img width="1902" height="2819" alt="bundle-builder-middle-screens" src="https://github.com/user-attachments/assets/dcdf79f0-ca82-467f-9228-872a4d023616" />
 
 ---
 
