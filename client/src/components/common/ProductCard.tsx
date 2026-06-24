@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import type { ColorVariant, ProductCardProps } from "../../types/product";
+import ProductModal from "./ProductModal";
 import {
   formatPrice,
   calculateTotal,
@@ -13,7 +14,6 @@ export const ProductCard: React.FC<
   id,
   title,
   description,
-  learnMoreUrl = "#",
   variants,
   defaultVariantId,
   discountBadge,
@@ -22,6 +22,7 @@ export const ProductCard: React.FC<
   layout = "horizontal",
   required = false,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const initialVariant =
     variants.find((v) => v.id === defaultVariantId) || variants[0];
 
@@ -151,12 +152,12 @@ export const ProductCard: React.FC<
           {/* Description & Learn More */}
           <p className="text-xs leading-[1.3] tracking-[0.6px] mb-3">
             {description}
-            <a
-              href={learnMoreUrl}
-              className="text-[#4E2FD2] hover:text-[#3a20a0] underline font-medium inline-block ml-1 transition-colors focus:ring-2 focus:ring-[#4E2FD2] focus:outline-none rounded"
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="text-[#4E2FD2] hover:text-[#3a20a0] underline font-medium inline-block ml-1 transition-colors focus:ring-2 focus:ring-[#4E2FD2] focus:outline-none rounded cursor-pointer border-none bg-transparent p-0"
             >
               Learn more
-            </a>
+            </button>
           </p>
 
           {/* Color Selector */}
@@ -258,6 +259,17 @@ export const ProductCard: React.FC<
           </div>
         </div>
       </div>
+
+      <ProductModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={title}
+        description={description}
+        displayBadge={displayBadge}
+        variants={variants}
+        selectedVariant={selectedVariant}
+        setSelectedVariant={setSelectedVariant}
+      />
     </div>
   );
 };

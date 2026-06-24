@@ -3,6 +3,7 @@
     "id": "prod-sense-hub",
     "title": "Wyze Sense Hub",
     "description": "Required control hub for all Wyze Sense security devices.",
+    "required": true,
     "variants": [
       {
         "id": "sense-hub-white",
