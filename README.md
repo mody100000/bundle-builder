@@ -63,6 +63,22 @@ The application will launch on:
 - **Frontend client:** `http://localhost:5174/` (or the next available port)
 - **Backend server:** `http://localhost:5000/`
 
+### 🐳 Run with Docker (Production Mode)
+To build a production bundle and run the entire application inside a single Docker container (using Nginx as a reverse proxy on port 80 and Node to handle API routes on port 5000):
+
+1. **Build the Docker Image:**
+   ```bash
+   docker build -t bundle-builder .
+   ```
+
+2. **Run the Container:**
+   ```bash
+   docker run -d -p 8080:80 bundle-builder
+   ```
+
+3. **Open the Live Web Application:**
+   Navigate to `http://localhost:8080` in your web browser.
+
 ---
 
 ## 🛠️ Tech Stack

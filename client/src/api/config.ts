@@ -1,6 +1,6 @@
 import type { Selection } from "../types/product";
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = import.meta.env.DEV ? "http://localhost:5000" : "";
 
 export async function fetchConfig(systemId: string): Promise<Record<string, Selection>> {
   const response = await fetch(`${BASE_URL}/api/config?systemId=${encodeURIComponent(systemId)}`);
