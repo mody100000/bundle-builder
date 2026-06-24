@@ -1,7 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { INITIAL_STEP, LAST_STEP, type StepId } from "./constants";
 import { type Selection } from "../types/product";
+import { fetchConfig, saveConfig as apiSaveConfig } from "../api/config";
+import { toast } from "react-toastify";
 
 export interface BuilderContextType {
   openSteps: Record<StepId, boolean>;
@@ -22,6 +24,8 @@ export interface BuilderContextType {
     required?: boolean,
     maxQuantity?: number
   ) => void;
+  saveSystemForLater: () => Promise<void>;
+  checkout: () => Promise<void>;
 }
 
 const BuilderContext = createContext<BuilderContextType | undefined>(undefined);
@@ -36,7 +40,58 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
     initial[INITIAL_STEP] = true;
     return initial;
   });
+  const [systemId] = useState<string>(() => {
+    let id = localStorage.getItem("systemId");
+    if (!id) {
+      if (typeof crypto !== "undefined" && crypto.randomUUID) {
+        id = crypto.randomUUID();
+      } else {
+        id = "usr_" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      }
+      localStorage.setItem("systemId", id);
+    }
+    return id;
+  });
+
   const [selectedVariants, setSelectedVariants] = useState<Record<string, Selection>>({});
+
+  useEffect(() => {
+    if (!systemId) return;
+    fetchConfig(systemId)
+      .then((data) => {
+        if (data && typeof data === "object" && Object.keys(data).length > 0) {
+          setSelectedVariants(data);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load config on mount:", err);
+      });
+  }, [systemId]);
+
+  const saveSystemForLater = async () => {
+    if (!systemId) return;
+    try {
+      await apiSaveConfig(systemId, selectedVariants);
+      toast.success("Your security system configuration has been saved successfully!");
+    } catch (error) {
+      console.error("Failed to save config:", error);
+      toast.error("Failed to save your security system configuration. Please try again.");
+    }
+  };
+
+  const checkout = async () => {
+    if (!systemId) return;
+    try {
+      // Clear saved data on the backend
+      await apiSaveConfig(systemId, {});
+      // Clear local state
+      setSelectedVariants({});
+      toast.success("Checkout completed! Your system configuration has been placed and cleared.");
+    } catch (error) {
+      console.error("Failed to complete checkout:", error);
+      toast.error("Failed to complete checkout. Please try again.");
+    }
+  };
 
   const toggleStep = (id: StepId) => {
     setOpenSteps((prev) => ({
@@ -143,6 +198,8 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
         selections,
         selectedVariants,
         updateVariantQuantity,
+        saveSystemForLater,
+        checkout,
       }}
     >
       {children}

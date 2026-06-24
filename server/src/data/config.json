@@ -1,0 +1,15 @@
+{
+  "sense-hub-white": {
+    "stepId": 3,
+    "productId": "prod-sense-hub",
+    "variantId": "sense-hub-white",
+    "quantity": 1,
+    "price": 0,
+    "originalPrice": 29.92,
+    "name": "Wyze Sense Hub",
+    "colorName": "White",
+    "image": "/images/Wyze Sense Hub.webp",
+    "required": true,
+    "maxQuantity": 1
+  }
+}

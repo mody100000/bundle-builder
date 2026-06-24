@@ -1,0 +1,26 @@
+{
+  "sense-hub-white": {
+    "stepId": 3,
+    "productId": "prod-sense-hub",
+    "variantId": "sense-hub-white",
+    "quantity": 1,
+    "price": 0,
+    "originalPrice": 29.92,
+    "name": "Wyze Sense Hub",
+    "colorName": "White",
+    "image": "/images/Wyze Sense Hub.webp",
+    "required": true,
+    "maxQuantity": 1
+  },
+  "cam-duo-white": {
+    "stepId": 1,
+    "productId": "prod-cam-duo",
+    "variantId": "cam-duo-white",
+    "quantity": 1,
+    "price": 69.98,
+    "name": "Wyze Duo Cam Doorbell",
+    "colorName": "White",
+    "image": "/images/duoCam.png",
+    "maxQuantity": 2
+  }
+}
