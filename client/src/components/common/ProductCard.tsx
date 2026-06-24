@@ -80,6 +80,8 @@ export const ProductCard: React.FC<
         title,
         selectedVariant.name,
         selectedVariant.image,
+        required,
+        selectedVariant.maxQuantity
       );
     }
   };
@@ -97,6 +99,8 @@ export const ProductCard: React.FC<
         title,
         selectedVariant.name,
         selectedVariant.image,
+        required,
+        selectedVariant.maxQuantity
       );
     }
   };

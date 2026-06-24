@@ -34,7 +34,7 @@
   },
   {
     "id": "prod-sense-motion",
-    "title": "Wyze Sense Motion",
+    "title": "Wyze Sense Motion Sensor",
     "description": "Detects motion up to 30 feet away with a 120-degree field of view.",
     "variants": [
       {
