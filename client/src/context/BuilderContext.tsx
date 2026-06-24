@@ -4,7 +4,7 @@ import { INITIAL_STEP, LAST_STEP, type StepId } from "./constants";
 import { type Selection } from "../types/product";
 
 export interface BuilderContextType {
-  activeStep: StepId | null;
+  openSteps: Record<StepId, boolean>;
   toggleStep: (step: StepId) => void;
   goToNextStep: (currentStep: StepId) => void;
   selections: Record<StepId, number>;
@@ -29,7 +29,11 @@ interface BuilderProviderProps {
 }
 
 export function BuilderProvider({ children }: BuilderProviderProps) {
-  const [activeStep, setActiveStep] = useState<StepId | null>(INITIAL_STEP);
+  const [openSteps, setOpenSteps] = useState<Record<StepId, boolean>>(() => {
+    const initial: Record<StepId, boolean> = { 1: false, 2: false, 3: false, 4: false };
+    initial[INITIAL_STEP] = true;
+    return initial;
+  });
   const [selectedVariants, setSelectedVariants] = useState<Record<string, Selection>>({
     "sense-hub-white": {
       stepId: 3,
@@ -45,12 +49,19 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
   });
 
   const toggleStep = (id: StepId) => {
-    setActiveStep((prev) => (prev === id ? null : id));
+    setOpenSteps((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
   const goToNextStep = (currentStep: StepId) => {
     if (currentStep < LAST_STEP) {
-      setActiveStep((currentStep + 1) as StepId);
+      setOpenSteps((prev) => ({
+        ...prev,
+        [currentStep]: false,
+        [currentStep + 1]: true,
+      }));
     }
   };
 
@@ -131,7 +142,7 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
   return (
     <BuilderContext.Provider
       value={{
-        activeStep,
+        openSteps,
         toggleStep,
         goToNextStep,
         selections,

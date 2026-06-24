@@ -29,8 +29,8 @@ const ChevronIcon = ({ isOpen }: { isOpen: boolean }) => (
 );
 
 export function AccordionStep({ id, title, children }: AccordionStepProps) {
-  const { activeStep, toggleStep, selections } = useBuilder();
-  const isOpen = activeStep === id;
+  const { openSteps, toggleStep, selections } = useBuilder();
+  const isOpen = !!openSteps[id];
   const selectionCount = selections[id] || 0;
 
   return (

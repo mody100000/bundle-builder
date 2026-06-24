@@ -41,7 +41,7 @@
         "name": "White",
         "image": "/images/Wyze Sense Motion.webp",
         "thumbnail": "/images/Wyze Sense Motion.webp",
-        "price": 14.99,
+        "price": 59.98,
         "discount": 0,
         "maxQuantity": 5
       }
@@ -58,7 +58,7 @@
         "image": "/images/Wyze Sense Climate Sensor.webp",
         "thumbnail": "/images/Wyze Sense Climate Sensor.webp",
         "price": 12.99,
-        "discount": 0,
+        "discount": 7,
         "maxQuantity": 5
       }
     ]
