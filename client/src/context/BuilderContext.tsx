@@ -18,7 +18,8 @@ export interface BuilderContextType {
     originalPrice: number | undefined,
     name: string,
     colorName: string,
-    image: string
+    image: string,
+    required?: boolean
   ) => void;
 }
 
@@ -34,19 +35,7 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
     initial[INITIAL_STEP] = true;
     return initial;
   });
-  const [selectedVariants, setSelectedVariants] = useState<Record<string, Selection>>({
-    "sense-hub-white": {
-      stepId: 3,
-      productId: "prod-sense-hub",
-      variantId: "sense-hub-white",
-      quantity: 1,
-      price: 0,
-      originalPrice: 29.92,
-      name: "Wyze Sense Hub",
-      colorName: "White",
-      image: "/images/Wyze Sense Hub.webp"
-    }
-  });
+  const [selectedVariants, setSelectedVariants] = useState<Record<string, Selection>>({});
 
   const toggleStep = (id: StepId) => {
     setOpenSteps((prev) => ({
@@ -74,23 +63,25 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
     originalPrice: number | undefined,
     name: string,
     colorName: string,
-    image: string
+    image: string,
+    required?: boolean
   ) => {
     setSelectedVariants((prev) => {
       const next = { ...prev };
 
-      // Wyze Sense Hub is required and locked to quantity 1 (free, originalPrice 29.92)
-      if (variantId === "sense-hub-white") {
+      // Required items are locked to quantity 1
+      if (required) {
         next[variantId] = {
-          stepId: 3,
-          productId: "prod-sense-hub",
-          variantId: "sense-hub-white",
+          stepId,
+          productId,
+          variantId,
           quantity: 1,
-          price: 0,
-          originalPrice: 29.92,
-          name: "Wyze Sense Hub",
-          colorName: "White",
-          image: "/images/Wyze Sense Hub.webp"
+          price,
+          originalPrice,
+          name,
+          colorName,
+          image,
+          required: true
         };
         return next;
       }

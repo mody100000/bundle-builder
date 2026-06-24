@@ -46,4 +46,5 @@ export interface Selection {
   colorName: string;
   image: string;
   stepId: StepId;
+  required?: boolean;
 }
