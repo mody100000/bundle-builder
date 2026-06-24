@@ -19,7 +19,8 @@ export interface BuilderContextType {
     name: string,
     colorName: string,
     image: string,
-    required?: boolean
+    required?: boolean,
+    maxQuantity?: number
   ) => void;
 }
 
@@ -64,7 +65,8 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
     name: string,
     colorName: string,
     image: string,
-    required?: boolean
+    required?: boolean,
+    maxQuantity?: number
   ) => {
     setSelectedVariants((prev) => {
       const next = { ...prev };
@@ -81,7 +83,8 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
           name,
           colorName,
           image,
-          required: true
+          required: true,
+          maxQuantity: 1
         };
         return next;
       }
@@ -108,6 +111,7 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
           name,
           colorName,
           image,
+          maxQuantity
         };
       }
       return next;

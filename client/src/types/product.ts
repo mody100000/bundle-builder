@@ -47,4 +47,5 @@ export interface Selection {
   image: string;
   stepId: StepId;
   required?: boolean;
+  maxQuantity?: number;
 }

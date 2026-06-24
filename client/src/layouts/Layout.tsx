@@ -15,7 +15,7 @@ export default function Layout() {
           </div>
 
           {/* Review Panel Area (Right) */}
-          <div className="xl:col-span-3 xl:sticky xl:top-6">
+          <div className="xl:col-span-3">
             <ReviewPanel />
           </div>
         </div>

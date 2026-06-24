@@ -44,7 +44,7 @@ export function AccordionStep({ id, title, children }: AccordionStepProps) {
       {isOpen ? (
         /* Open State Header */
         <div className="pt-5">
-          <div className="text-xs leading-[100%] tracking-[1.6px] uppercase border-b border-current pb-1 w-full">
+          <div className="text-xs text-[#484848] leading-[100%] tracking-[1.6px] uppercase border-b border-current pb-1 w-full">
             <span className="p-4">Step {id} of 4</span>
           </div>
           <div className="flex items-center justify-between p-5 pb-3">
