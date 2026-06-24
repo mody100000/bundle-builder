@@ -94,7 +94,7 @@ export const ReviewItem: React.FC<ReviewItemProps> = ({ item }) => {
       </div>
 
       {/* Right: Quantity Selector & Pricing */}
-      <div className="flex items-center shrink-0">
+      <div className="flex items-center shrink-0 gap-3 md:gap-4 xl:gap-3">
         {/* Quantity buttons */}
         {item.stepId !== 2 && (
           <div className="flex items-center gap-2">
@@ -123,29 +123,29 @@ export const ReviewItem: React.FC<ReviewItemProps> = ({ item }) => {
         )}
 
         {/* Prices */}
-        <div className="text-right text-sm leading-4 tracking-[0.005em] flex flex-col justify-center min-w-16 ">
+        <div className="text-right text-sm leading-4 tracking-[0.005em] flex flex-col justify-center min-w-16 md:flex-row md:items-baseline md:gap-1.5 md:min-w-0 xl:flex-col xl:items-end xl:gap-0 xl:min-w-16">
           {item.price === 0 ? (
             <>
-              <span className="  text-[#6F7882]  mb-0.5">
+              <span className="text-[#6F7882] mb-0.5 md:mb-0 line-through">
                 {formatPrice(item.originalPrice ?? 0)}
               </span>
-              <span className=" font-black text-[#4E2FD2]  uppercase">
+              <span className="font-black text-[#4E2FD2] uppercase">
                 FREE
               </span>
             </>
           ) : item.originalPrice && item.originalPrice > item.price ? (
             <>
-              <span className="  text-[#6F7882]  mb-0.5">
+              <span className="text-[#6F7882] mb-0.5 md:mb-0 line-through">
                 {formatPrice(item.originalPrice * item.quantity)}
                 {item.stepId === 2 && "/mo"}
               </span>
-              <span className="  text-[#4E2FD2] ">
+              <span className="font-bold text-[#4E2FD2]">
                 {formatPrice(item.price * item.quantity)}
                 {item.stepId === 2 && "/mo"}
               </span>
             </>
           ) : (
-            <span className="  text-[#4E2FD2] ">
+            <span className="font-bold text-[#4E2FD2]">
               {formatPrice(item.price * item.quantity)}
               {item.stepId === 2 && "/mo"}
             </span>
