@@ -1,0 +1,68 @@
+[
+  {
+    "id": "prod-microsd-card",
+    "title": "Wyze MicroSD Card",
+    "description": "Continuous local recording storage for your Wyze cameras.",
+    "variants": [
+      {
+        "id": "microsd-32gb",
+        "name": "32GB",
+        "image": "/images/Wyze MicroSD Card (32GB).webp",
+        "thumbnail": "/images/Wyze MicroSD Card (32GB).webp",
+        "price": 21.96,
+        "discount": 0,
+        "maxQuantity": 10
+      },
+      {
+        "id": "microsd-128gb",
+        "name": "128GB",
+        "image": "/images/Wyze MicroSD Card (128GB).webp",
+        "thumbnail": "/images/Wyze MicroSD Card (128GB).webp",
+        "price": 31.96,
+        "discount": 5,
+        "maxQuantity": 10
+      },
+      {
+        "id": "microsd-256gb",
+        "name": "256GB",
+        "image": "/images/Wyze MicroSD Card (256GB).webp",
+        "thumbnail": "/images/Wyze MicroSD Card (256GB).webp",
+        "price": 41.96,
+        "discount": 0,
+        "maxQuantity": 10
+      }
+    ]
+  },
+  {
+    "id": "prod-solar-panel",
+    "title": "Wyze Solar Panel",
+    "description": "Keep your wireless cameras charged continuously with solar energy.",
+    "variants": [
+      {
+        "id": "solar-panel-default",
+        "name": "Standard",
+        "image": "/images/Wyze Solar Panel.webp",
+        "thumbnail": "/images/Wyze Solar Panel.webp",
+        "price": 24.99,
+        "discount": 0,
+        "maxQuantity": 5
+      }
+    ]
+  },
+  {
+    "id": "prod-window-mount",
+    "title": "Wyze Window Mount",
+    "description": "Mount your Wyze Cam to any window pane to view outdoors without glare.",
+    "variants": [
+      {
+        "id": "window-mount-default",
+        "name": "Standard",
+        "image": "/images/Wyze Window Mount.webp",
+        "thumbnail": "/images/Wyze Window Mount.webp",
+        "price": 7.99,
+        "discount": 0,
+        "maxQuantity": 5
+      }
+    ]
+  }
+]

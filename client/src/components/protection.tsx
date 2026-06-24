@@ -1,15 +1,34 @@
+import { useProtection } from "../hooks/useProtection";
+import ProductCard from "./common/ProductCard";
+import BuilderLayout from "../layouts/BuilderLayout";
+
 export function Protection() {
+  const { data: protection, loading, error } = useProtection();
+
   return (
     <div className="space-y-4">
-      <div className="text-xs text-gray-500 leading-relaxed">
-        Add proactive flood detection, smoke monitoring, sirens, and external
-        hardware safety locks.
-      </div>
-      <div className="p-12 bg-slate-50 border border-slate-100 rounded-2xl text-center text-xs text-gray-400 font-medium select-none">
-        Protection Configuration Area (Step 4 Placeholder)
-      </div>
-      <div className="p-3 bg-blue-50 border border-blue-100 text-blue-700 text-xs rounded-xl font-medium">
-        Review your configurations on the right-hand panel before checkout.
+      {loading && (
+        <p className="text-center text-gray-400 py-10 text-sm">
+          Loading protection accessories…
+        </p>
+      )}
+      {error && (
+        <p className="text-center text-red-500 py-6 text-sm">
+          Error: {error.message}
+        </p>
+      )}
+
+      {protection && (
+        <BuilderLayout
+          items={protection}
+          renderItem={(item, layout) => (
+            <ProductCard key={item.id} {...item} layout={layout} stepId={4} />
+          )}
+        />
+      )}
+
+      <div className="p-3 text-center w-fit mx-auto mt-6 bg-white border border-[#4E2FD2] rounded text-[#4E2FD2] text-xs font-medium">
+        Review your configurations on the Review Panel for checkout.
       </div>
     </div>
   );
