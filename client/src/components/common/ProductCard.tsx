@@ -20,6 +20,7 @@ export const ProductCard: React.FC<
   stepId = 1,
   onSelectionChange,
   layout = "horizontal",
+  required = false,
 }) => {
   const initialVariant =
     variants.find((v) => v.id === defaultVariantId) || variants[0];
@@ -66,7 +67,8 @@ export const ProductCard: React.FC<
   }, [selectedVariant, currentQuantity, id, title, stepId]);
 
   const handleDecrement = () => {
-    if (currentQuantity > 0) {
+    const minQty = required ? 1 : 0;
+    if (currentQuantity > minQty) {
       updateVariantQuantity(
         stepId,
         id,
@@ -82,7 +84,7 @@ export const ProductCard: React.FC<
   };
 
   const handleIncrement = () => {
-    const maxQty = selectedVariant.maxQuantity ?? Infinity;
+    const maxQty = required ? 1 : (selectedVariant.maxQuantity ?? Infinity);
     if (currentQuantity < maxQty) {
       updateVariantQuantity(
         stepId,
@@ -158,39 +160,41 @@ export const ProductCard: React.FC<
           </p>
 
           {/* Color Selector */}
-          <div className="">
-            <div className="flex flex-wrap gap-2">
-              {variants.map((variant) => {
-                const isSelected = selectedVariant.id === variant.id;
-                return (
-                  <button
-                    key={variant.id}
-                    onClick={() => setSelectedVariant(variant)}
-                    className={`flex items-center justify-center rounded-xs border text-center transition-all duration-200 cursor-pointer min-w-16 ${
-                      isSelected
-                        ? "border-[0.5px] border-[#0AA288] bg-[#1DF0BB0A] shadow-sm"
-                        : "border-[0.5px] border-[#CCCCCC] bg-white "
-                    }`}
-                  >
-                    <div className="w-6 h-6 rounded-md overflow-hidden flex items-center justify-center">
-                      <img
-                        src={variant.thumbnail}
-                        alt={variant.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <span
-                      className={
-                        "text-[10px] text-[#1F1F1F] leading-none tracking-[0.6px] truncate max-w-14"
-                      }
+          {variants.length > 1 && (
+            <div className="">
+              <div className="flex flex-wrap gap-2">
+                {variants.map((variant) => {
+                  const isSelected = selectedVariant.id === variant.id;
+                  return (
+                    <button
+                      key={variant.id}
+                      onClick={() => setSelectedVariant(variant)}
+                      className={`flex items-center justify-center rounded-xs border text-center transition-all duration-200 cursor-pointer min-w-16 ${
+                        isSelected
+                          ? "border-[0.5px] border-[#0AA288] bg-[#1DF0BB0A] shadow-sm"
+                          : "border-[0.5px] border-[#CCCCCC] bg-white "
+                      }`}
                     >
-                      {variant.name}
-                    </span>
-                  </button>
-                );
-              })}
+                      <div className="w-6 h-6 rounded-md overflow-hidden flex items-center justify-center">
+                        <img
+                          src={variant.thumbnail}
+                          alt={variant.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span
+                        className={
+                          "text-[10px] text-[#1F1F1F] leading-none tracking-[0.6px] truncate max-w-14"
+                        }
+                      >
+                        {variant.name}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Quantity & Price Row */}
@@ -199,7 +203,7 @@ export const ProductCard: React.FC<
           <div className="flex items-center">
             <button
               onClick={handleDecrement}
-              disabled={currentQuantity <= 0}
+              disabled={required ? currentQuantity <= 1 : currentQuantity <= 0}
               className="w-7 h-7 flex items-center text-lg justify-center rounded-md bg-[#F0F4F7] hover:bg-gray-100 text-gray-600 border border-gray-200 shadow-sm transition-all active:scale-95 cursor-pointer font-bold disabled:bg-white disabled:cursor-not-allowed disabled:border-2 disabled:border-[#E6EBF0] disabled:text-gray-400 "
             >
               -
@@ -210,7 +214,9 @@ export const ProductCard: React.FC<
             <button
               onClick={handleIncrement}
               disabled={
-                currentQuantity >= (selectedVariant.maxQuantity ?? Infinity)
+                required
+                  ? currentQuantity >= 1
+                  : currentQuantity >= (selectedVariant.maxQuantity ?? Infinity)
               }
               className="w-7 h-7 flex items-center justify-center rounded-md bg-[#F0F4F7] hover:bg-gray-100 text-gray-600 border border-gray-200 shadow-sm transition-all active:scale-95 cursor-pointer font-bold disabled:bg-white disabled:cursor-not-allowed disabled:border-2 disabled:border-[#E6EBF0] disabled:text-gray-400 text-lg"
             >

@@ -4,7 +4,7 @@ import { INITIAL_STEP, LAST_STEP, type StepId } from "./constants";
 import { type Selection } from "../types/product";
 
 export interface BuilderContextType {
-  activeStep: StepId | null;
+  openSteps: Record<StepId, boolean>;
   toggleStep: (step: StepId) => void;
   goToNextStep: (currentStep: StepId) => void;
   selections: Record<StepId, number>;
@@ -29,16 +29,39 @@ interface BuilderProviderProps {
 }
 
 export function BuilderProvider({ children }: BuilderProviderProps) {
-  const [activeStep, setActiveStep] = useState<StepId | null>(INITIAL_STEP);
-  const [selectedVariants, setSelectedVariants] = useState<Record<string, Selection>>({});
+  const [openSteps, setOpenSteps] = useState<Record<StepId, boolean>>(() => {
+    const initial: Record<StepId, boolean> = { 1: false, 2: false, 3: false, 4: false };
+    initial[INITIAL_STEP] = true;
+    return initial;
+  });
+  const [selectedVariants, setSelectedVariants] = useState<Record<string, Selection>>({
+    "sense-hub-white": {
+      stepId: 3,
+      productId: "prod-sense-hub",
+      variantId: "sense-hub-white",
+      quantity: 1,
+      price: 0,
+      originalPrice: 29.92,
+      name: "Wyze Sense Hub",
+      colorName: "White",
+      image: "/images/Wyze Sense Hub.webp"
+    }
+  });
 
   const toggleStep = (id: StepId) => {
-    setActiveStep((prev) => (prev === id ? null : id));
+    setOpenSteps((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
   const goToNextStep = (currentStep: StepId) => {
     if (currentStep < LAST_STEP) {
-      setActiveStep((currentStep + 1) as StepId);
+      setOpenSteps((prev) => ({
+        ...prev,
+        [currentStep]: false,
+        [currentStep + 1]: true,
+      }));
     }
   };
 
@@ -55,6 +78,22 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
   ) => {
     setSelectedVariants((prev) => {
       const next = { ...prev };
+
+      // Wyze Sense Hub is required and locked to quantity 1 (free, originalPrice 29.92)
+      if (variantId === "sense-hub-white") {
+        next[variantId] = {
+          stepId: 3,
+          productId: "prod-sense-hub",
+          variantId: "sense-hub-white",
+          quantity: 1,
+          price: 0,
+          originalPrice: 29.92,
+          name: "Wyze Sense Hub",
+          colorName: "White",
+          image: "/images/Wyze Sense Hub.webp"
+        };
+        return next;
+      }
       
       // For Step 2 (Plans), enforce subscribing to only one plan at a time
       if (stepId === 2 && quantity > 0) {
@@ -103,7 +142,7 @@ export function BuilderProvider({ children }: BuilderProviderProps) {
   return (
     <BuilderContext.Provider
       value={{
-        activeStep,
+        openSteps,
         toggleStep,
         goToNextStep,
         selections,

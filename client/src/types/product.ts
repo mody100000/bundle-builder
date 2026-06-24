@@ -9,6 +9,7 @@ export interface ColorVariant {
   originalPrice?: number; // Pre-discount price
   discount?: number;
   quantity?: number;
+  minQuantity?: number;
   maxQuantity?: number;
 }
 
@@ -22,6 +23,7 @@ export interface ProductCardProps {
   discountBadge?: string;
   stepId?: StepId;
   onSelectionChange?: (selection: Selection) => void;
+  required?: boolean;
 }
 
 export interface Product {
@@ -31,6 +33,7 @@ export interface Product {
   learnMoreUrl?: string;
   discountBadge?: string;
   variants: ColorVariant[];
+  required?: boolean;
 }
 
 export interface Selection {
