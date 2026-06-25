@@ -3,6 +3,8 @@
 A monorepo built with React + Vite (frontend) and Express (backend), both in TypeScript.
 Features a high-fidelity, interactive multi-step bundle builder with a live order summary panel.
 
+**Live Demo:** [https://268f-40-65-91-158.ngrok-free.app/](https://268f-40-65-91-158.ngrok-free.app/)
+
 ---
 
 ## 📸 Screenshots
